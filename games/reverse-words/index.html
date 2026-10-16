@@ -5,14 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reverse Words · Family Games</title>
   <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="stylesheet" href="reverse.css">
 </head>
 <body>
-  <main class="page" style="--accent: var(--c-reverse)">
-    <a class="back" href="../../">← Volver al panel</a>
-    <header>
-      <h1>🔄 Reverse Words</h1>
-    </header>
-    <div class="placeholder">Juego en construcción.</div>
+  <main class="page rw" style="--accent: var(--c-reverse)">
+    <div class="rw-top">
+      <a class="back" href="../../">← Panel</a>
+      <ol class="steps" aria-label="Progreso">
+        <li data-step="1">1</li>
+        <li data-step="2">2</li>
+        <li data-step="3">3</li>
+      </ol>
+    </div>
+
+    <!-- Paso 1: jugador 1 graba la palabra -->
+    <section class="step" id="step-1">
+      <p class="who">Jugador 1</p>
+      <h1 class="title">Di esta palabra</h1>
+
+      <button class="word-card covered" id="word" type="button"></button>
+      <button class="link" id="new-word" type="button">🎲 Cambiar palabra</button>
+
+      <div class="mic-wrap">
+        <button class="mic" id="rec-1" type="button" aria-label="Grabar">
+          <span class="mic-icon">🎙️</span>
+        </button>
+        <p class="mic-label" id="rec-1-label">Toca para grabar</p>
+      </div>
+
+      <button class="btn big hidden" id="to-step-2" type="button">Listo · Pasa el móvil al jugador 2 →</button>
+    </section>
+
+    <!-- Paso 2: jugador 2 escucha al revés y lo imita -->
+    <section class="step hidden" id="step-2">
+      <p class="who">Jugador 2</p>
+      <h1 class="title">Escucha e imítalo</h1>
+
+      <div class="tiles">
+        <button class="tile tile-blue" id="play-1-rev" type="button">
+          <span class="tile-icon">⏪</span>
+          <span class="tile-text">Escuchar<br>al revés</span>
+        </button>
+        <button class="tile tile-green" id="play-2" type="button" disabled>
+          <span class="tile-icon">▶</span>
+          <span class="tile-text">Mi<br>grabación</span>
+        </button>
+      </div>
+
+      <div class="mic-wrap">
+        <button class="mic" id="rec-2" type="button" aria-label="Grabar imitación">
+          <span class="mic-icon">🎙️</span>
+        </button>
+        <p class="mic-label" id="rec-2-label">Grábate imitando lo que oyes</p>
+      </div>
+
+      <button class="btn big hidden" id="to-step-3" type="button">Darle la vuelta →</button>
+    </section>
+
+    <!-- Paso 3: se le da la vuelta a la imitación y se adivina -->
+    <section class="step hidden" id="step-3">
+      <p class="who">Jugador 2</p>
+      <h1 class="title">¿Qué palabra es?</h1>
+
+      <button class="tile tile-orange tile-wide" id="play-2-rev" type="button">
+        <span class="tile-icon">🔄</span>
+        <span class="tile-text">Escuchar al derecho</span>
+      </button>
+
+      <button class="word-card covered" id="answer" type="button"></button>
+
+      <button class="tile tile-green tile-wide hidden" id="play-1" type="button">
+        <span class="tile-icon">▶</span>
+        <span class="tile-text">Escuchar el original</span>
+      </button>
+
+      <button class="btn big" id="new-round" type="button">Nueva ronda</button>
+    </section>
+
+    <p class="message" id="message" aria-live="polite"></p>
   </main>
+
+  <script src="words.js"></script>
+  <script src="reverse.js"></script>
 </body>
 </html>
