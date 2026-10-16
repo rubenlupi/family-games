@@ -1,0 +1,110 @@
+:root {
+  --bg: #fdf8f1;
+  --surface: #ffffff;
+  --text: #2b2118;
+  --muted: #7a6a5c;
+  --border: #eadfd2;
+  --radius: 18px;
+  --shadow: 0 6px 20px rgba(60, 40, 20, 0.08);
+  --c-reverse: #4f7cff;
+  --c-impostor: #e2574c;
+  --c-cripticos: #2fa37a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1714;
+    --surface: #26201b;
+    --text: #f3ebe2;
+    --muted: #b3a493;
+    --border: #3a3029;
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px 48px;
+}
+
+header h1 {
+  margin: 0 0 4px;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+}
+
+header p {
+  margin: 0 0 32px;
+  color: var(--muted);
+}
+
+.games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-top: 6px solid var(--accent);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.game-card:hover,
+.game-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(60, 40, 20, 0.15);
+  outline: none;
+}
+
+.game-card .icon { font-size: 2.4rem; }
+.game-card h2 { margin: 0; font-size: 1.35rem; }
+.game-card p { margin: 0; color: var(--muted); flex: 1; }
+
+.game-card .play {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.back:hover { color: var(--text); }
+
+.placeholder {
+  padding: 32px 24px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+  background: var(--surface);
+  text-align: center;
+  color: var(--muted);
+}
