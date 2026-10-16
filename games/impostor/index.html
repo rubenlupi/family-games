@@ -5,14 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>El Impostor · Family Games</title>
   <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="stylesheet" href="impostor.css">
 </head>
 <body>
-  <main class="page" style="--accent: var(--c-impostor)">
+  <main class="page narrow" style="--accent: var(--c-impostor)">
     <a class="back" href="../../">← Volver al panel</a>
     <header>
       <h1>🕵️ El Impostor</h1>
     </header>
-    <div class="placeholder">Juego en construcción.</div>
+
+    <!-- 1. Ajustes -->
+    <section id="screen-setup">
+      <div class="card">
+        <h2>Jugadores</h2>
+        <ul id="player-list" class="player-list"></ul>
+        <form id="add-player" class="row">
+          <input id="player-name" class="input" placeholder="Nombre" maxlength="20" autocomplete="off">
+          <button class="btn" type="submit">Añadir</button>
+        </form>
+        <p class="hint">Mínimo 3 jugadores.</p>
+      </div>
+
+      <div class="card">
+        <h2>Impostores</h2>
+        <div class="stepper">
+          <button class="btn ghost" type="button" id="imp-less" aria-label="Menos impostores">−</button>
+          <span id="imp-count">1</span>
+          <button class="btn ghost" type="button" id="imp-more" aria-label="Más impostores">+</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Categorías</h2>
+        <div id="category-list" class="chips"></div>
+      </div>
+
+      <div class="card">
+        <label class="toggle">
+          <input type="checkbox" id="hint-toggle">
+          <span>El impostor ve la categoría como pista</span>
+        </label>
+      </div>
+
+      <button class="btn big" id="start" type="button">Empezar partida</button>
+    </section>
+
+    <!-- 2. Reparto de palabras: el móvil pasa de mano en mano -->
+    <section id="screen-deal" class="hidden">
+      <div class="card deal">
+        <p class="hint" id="deal-progress"></p>
+        <div id="deal-pass">
+          <p class="pass-to">Pásale el móvil a</p>
+          <p class="player-big" id="deal-name"></p>
+          <button class="btn big" id="deal-show" type="button">Ver mi palabra</button>
+        </div>
+        <div id="deal-secret" class="hidden">
+          <p class="secret" id="deal-word"></p>
+          <p class="hint" id="deal-extra"></p>
+          <button class="btn big" id="deal-next" type="button">Ocultar y pasar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Partida -->
+    <section id="screen-play" class="hidden">
+      <div class="card deal">
+        <p class="pass-to">Empieza</p>
+        <p class="player-big" id="first-player"></p>
+        <p class="hint">Por turnos, cada uno dice una palabra relacionada con la palabra secreta.
+          Después, votad quién creéis que es el impostor.</p>
+      </div>
+      <button class="btn big" id="reveal" type="button">Revelar impostor</button>
+    </section>
+
+    <!-- 4. Solución -->
+    <section id="screen-result" class="hidden">
+      <div class="card deal">
+        <p class="pass-to" id="result-label"></p>
+        <p class="player-big" id="result-impostors"></p>
+        <p class="pass-to">La palabra era</p>
+        <p class="secret" id="result-word"></p>
+      </div>
+      <div class="stack">
+        <button class="btn big" id="again" type="button">Otra ronda</button>
+        <button class="btn big ghost" id="settings" type="button">Cambiar ajustes</button>
+      </div>
+    </section>
   </main>
+
+  <script src="words.js"></script>
+  <script src="impostor.js"></script>
 </body>
 </html>

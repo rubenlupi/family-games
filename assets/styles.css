@@ -100,6 +100,59 @@ header p {
 
 .back:hover { color: var(--text); }
 
+/* Controles compartidos por los juegos */
+
+.card {
+  padding: 20px;
+  margin-bottom: 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.card h2 { margin: 0 0 12px; font-size: 1.1rem; }
+
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent, var(--text));
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn.big { display: block; width: 100%; padding: 16px; font-size: 1.1rem; }
+
+.btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.row { display: flex; gap: 8px; align-items: center; }
+.row .input { flex: 1; }
+
+.stack > * + * { margin-top: 12px; }
+
+.hint { color: var(--muted); font-size: 0.9rem; margin: 8px 0 0; }
+
+.hidden { display: none !important; }
+
 .placeholder {
   padding: 32px 24px;
   border-radius: var(--radius);
