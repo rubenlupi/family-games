@@ -5,14 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Crípticos · Family Games</title>
   <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="stylesheet" href="cripticos.css">
 </head>
 <body>
-  <main class="page" style="--accent: var(--c-cripticos)">
+  <main class="page narrow" style="--accent: var(--c-cripticos)">
     <a class="back" href="../../">← Volver al panel</a>
     <header>
       <h1>🧩 Crípticos</h1>
     </header>
-    <div class="placeholder">Juego en construcción.</div>
+
+    <details class="card how-to">
+      <summary>¿Cómo se juega?</summary>
+      <p>Cada pista esconde una palabra. Tiene dos partes: una <strong>definición</strong>
+        (al principio o al final de la frase) y un <strong>juego de palabras</strong> que lleva a la misma palabra.</p>
+      <ul>
+        <li><strong>Anagrama:</strong> letras desordenadas («loco», «revuelto», «movido»…).</li>
+        <li><strong>Palabra escondida:</strong> la solución está dentro de otras palabras.</li>
+        <li><strong>Inversión:</strong> una palabra leída al revés («vuelve», «al revés»…).</li>
+        <li><strong>Eliminación:</strong> quitar letras («sin cabeza» = sin la primera).</li>
+        <li><strong>Suma de partes:</strong> varias palabras pegadas.</li>
+        <li><strong>Doble definición:</strong> dos significados de la misma palabra.</li>
+      </ul>
+      <p>El número entre paréntesis es cuántas letras tiene la solución.</p>
+    </details>
+
+    <nav class="clue-nav">
+      <button class="btn ghost" id="prev" type="button" aria-label="Pista anterior">‹</button>
+      <span id="counter"></span>
+      <button class="btn ghost" id="next" type="button" aria-label="Pista siguiente">›</button>
+      <button class="btn ghost" id="random" type="button" aria-label="Pista sin resolver al azar">🔀</button>
+    </nav>
+
+    <div class="card clue-card">
+      <p class="clue" id="clue"></p>
+      <p class="clue-type hidden" id="clue-type"></p>
+      <div class="boxes" id="boxes"></div>
+      <p class="message" id="message" aria-live="polite"></p>
+      <p class="explanation hidden" id="explanation"></p>
+
+      <div class="actions" id="actions">
+        <button class="btn ghost" id="hints-toggle" type="button">💡 Pistas</button>
+        <button class="btn" id="check" type="button">Revisar</button>
+      </div>
+
+      <div class="hint-menu hidden" id="hint-menu">
+        <button class="btn ghost" data-hint="definition" type="button">Marcar la definición</button>
+        <button class="btn ghost" data-hint="type" type="button">Tipo de juego</button>
+        <button class="btn ghost" data-hint="letter" type="button">Revelar una letra</button>
+        <button class="btn ghost" data-hint="solution" type="button">Ver solución</button>
+      </div>
+
+      <button class="btn big hidden" id="go-next" type="button">Siguiente pista →</button>
+    </div>
+
+    <div class="keyboard" id="keyboard"></div>
   </main>
+
+  <script src="clues.js"></script>
+  <script src="cripticos.js"></script>
 </body>
 </html>

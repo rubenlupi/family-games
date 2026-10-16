@@ -1,0 +1,116 @@
+.page.narrow { max-width: 560px; }
+
+.how-to summary { cursor: pointer; font-weight: 600; }
+.how-to ul { padding-left: 20px; }
+.how-to p, .how-to li { color: var(--muted); }
+
+.clue-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.clue-nav .btn { width: 44px; height: 44px; padding: 0; font-size: 1.2rem; }
+.clue-nav #counter { flex: 1; text-align: center; color: var(--muted); }
+
+.clue {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.clue mark {
+  background: none;
+  color: inherit;
+  text-decoration: underline 3px var(--accent);
+  text-underline-offset: 4px;
+}
+
+.clue-type {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* --n = número de letras (lo pone el JS); las casillas encogen para caber en una fila. */
+.boxes {
+  display: grid;
+  grid-template-columns: repeat(var(--n, 5), minmax(0, 40px));
+  gap: 4px;
+  margin: 20px 0 8px;
+}
+
+.box {
+  min-width: 0;
+  height: 48px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.box.active { border-color: var(--accent); }
+.box.revealed { color: var(--accent); cursor: default; }
+.boxes.solved .box { border-color: var(--accent); background: var(--accent); color: #fff; }
+.boxes.wrong { animation: shake 0.35s; }
+
+@keyframes shake {
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.message { min-height: 1.5em; margin: 0; font-weight: 600; }
+.explanation { color: var(--muted); }
+
+.actions { display: flex; gap: 8px; margin-top: 12px; }
+.actions .btn { flex: 1; }
+
+.hint-menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.hint-menu .btn { padding: 10px; font-size: 0.9rem; }
+
+#go-next { margin-top: 16px; }
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.keyboard .kb-row { display: flex; gap: 4px; justify-content: center; }
+
+.keyboard button {
+  flex: 1;
+  max-width: 44px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.keyboard button.wide { max-width: 72px; flex: 1.6; }
