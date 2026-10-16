@@ -145,6 +145,8 @@ function show(screenId) {
 function showDealTurn() {
   const name = settings.players[round.turn];
   $("deal-progress").textContent = `Jugador ${round.turn + 1} de ${settings.players.length}`;
+  // El primero ya tiene el móvil: no tiene sentido decirle que se lo pase.
+  $("deal-label").textContent = round.turn === 0 ? "Turno de" : "Pásale el móvil a";
   $("deal-name").textContent = name;
   $("deal-pass").classList.remove("hidden");
   $("deal-secret").classList.add("hidden");
