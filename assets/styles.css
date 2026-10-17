@@ -11,6 +11,7 @@
   --c-cripticos: #2fa37a;
   --c-cifras: #b45309;
   --c-calculo: #6d28d9;
+  --c-cyl: #0f766e;
 }
 
 @media (prefers-color-scheme: dark) {

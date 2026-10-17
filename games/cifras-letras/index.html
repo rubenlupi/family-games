@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cifras y Letras · Family Games</title>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="stylesheet" href="cifrasletras.css">
+</head>
+<body data-game="cifrasletras">
+  <main class="page cyl" style="--accent: var(--c-cyl)">
+    <div class="topbar">
+      <a class="back" href="../../" data-i18n="back">← Volver al panel</a>
+      <div class="tools"></div>
+    </div>
+    <header>
+      <h1 data-i18n="title">🔤 Cifras y Letras</h1>
+    </header>
+
+    <!-- Todas las pantallas se pintan aquí desde cifrasletras.js -->
+    <section id="screen" aria-live="polite"></section>
+  </main>
+
+  <script src="../../assets/i18n.js"></script>
+  <script src="letras.js"></script>
+  <script src="cifras.js"></script>
+  <script src="scoring.js"></script>
+  <script src="cifrasletras.js"></script>
+</body>
+</html>
