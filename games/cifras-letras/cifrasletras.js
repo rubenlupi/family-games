@@ -55,7 +55,7 @@ I18N.add({
     "times-up": "¡Tiempo!",
     "answers": "Respuestas",
     "answers-help-letters": "Cada jugador dice su palabra. Escribidla aquí (las tildes son opcionales; la ñ no).",
-    "answers-help-numbers": "Cada jugador dice su resultado y cómo ha llegado. Escribid la operación, con paréntesis si hacen falta.",
+    "answers-help-numbers": "Cada jugador dice su resultado y cómo ha llegado. Tocad su casilla y escribid la operación con el teclado, con paréntesis si hacen falta.",
     "word-placeholder": "Palabra",
     "expr-placeholder": "Ej.: (75 + 25) × 6",
     "check": "Comprobar respuestas",
@@ -117,6 +117,9 @@ I18N.add({
     "hint-closest": "No se puede llegar exacto: lo más cerca es {value}.",
     "hint-step": "Prueba a empezar por: {step}",
     "draw-letters-first": "Elige las 9 letras para empezar.",
+    "keypad": "Teclado de la operación",
+    "keypad-back": "Borrar lo último",
+    "keypad-clear": "Borrar todo",
   },
   en: {
     "title.page": "Numbers & Letters · Family Games",
@@ -174,7 +177,7 @@ I18N.add({
     "times-up": "Time's up!",
     "answers": "Answers",
     "answers-help-letters": "Each player says their word. Type it here (accents are optional).",
-    "answers-help-numbers": "Each player says their result and how they got there. Type the sum, with brackets if needed.",
+    "answers-help-numbers": "Each player says their result and how they got there. Tap their box and enter the sum with the keypad, with brackets if needed.",
     "word-placeholder": "Word",
     "expr-placeholder": "e.g. (75 + 25) × 6",
     "check": "Check answers",
@@ -236,6 +239,9 @@ I18N.add({
     "hint-closest": "It can't be reached exactly: the closest is {value}.",
     "hint-step": "Try starting with: {step}",
     "draw-letters-first": "Pick the 9 letters to start.",
+    "keypad": "Keypad for the sum",
+    "keypad-back": "Delete the last one",
+    "keypad-clear": "Clear all",
   },
   fr: {
     "title.page": "Des chiffres et des lettres · Family Games",
@@ -293,7 +299,7 @@ I18N.add({
     "times-up": "Temps écoulé !",
     "answers": "Réponses",
     "answers-help-letters": "Chaque joueur annonce son mot. Écrivez-le ici (les accents sont facultatifs ; œ peut s'écrire oe).",
-    "answers-help-numbers": "Chaque joueur annonce son résultat et comment il l'a obtenu. Écrivez le calcul, avec des parenthèses si besoin.",
+    "answers-help-numbers": "Chaque joueur annonce son résultat et comment il l'a obtenu. Touchez sa case et tapez le calcul avec le clavier, avec des parenthèses si besoin.",
     "word-placeholder": "Mot",
     "expr-placeholder": "Ex. : (75 + 25) × 6",
     "check": "Vérifier les réponses",
@@ -355,6 +361,9 @@ I18N.add({
     "hint-closest": "Impossible de tomber juste : le plus proche est {value}.",
     "hint-step": "Essaie de commencer par : {step}",
     "draw-letters-first": "Choisis les 9 lettres pour commencer.",
+    "keypad": "Clavier du calcul",
+    "keypad-back": "Effacer le dernier",
+    "keypad-clear": "Tout effacer",
   },
 });
 
@@ -713,11 +722,79 @@ function renderPlay(game, r, board) {
   }
 }
 
+// --- Teclado para escribir operaciones ---
+//
+// Un botón por cada número que ha salido (si sale dos veces, dos botones); cada botón se
+// apaga cuando ese número ya está en la operación. También se puede escribir con el teclado.
+
+function appendToken(text, token) {
+  const base = text.replace(/\s+$/, "");
+  if (!base || base.endsWith("(") || token === ")") return base + token;
+  return `${base} ${token}`;
+}
+
+function removeLastToken(text) {
+  return text.replace(/\s*(\d+|\S)\s*$/, "");
+}
+
+function numberUses(text) {
+  const uses = {};
+  for (const n of String(text).match(/\d+/g) || []) uses[Number(n)] = (uses[Number(n)] || 0) + 1;
+  return uses;
+}
+
+function keypad(numbers, getInput) {
+  const pad = el("div", { class: "keypad", role: "group", "aria-label": t("keypad") });
+  const set = (value) => {
+    const input = getInput();
+    input.value = value;
+    input.dispatchEvent(new Event("input"));
+    refresh();
+  };
+  const numberButtons = numbers.map((n) => {
+    const b = el("button", { type: "button", class: n > 10 ? "key num large" : "key num" }, fmt(n));
+    b.addEventListener("click", () => set(appendToken(getInput().value, String(n))));
+    return b;
+  });
+  const key = (label, onclick, cls = "key", aria = null) => el("button", { type: "button", class: cls, onclick, "aria-label": aria }, label);
+  pad.append(
+    el("div", { class: "keypad-row nums" }, numberButtons),
+    el("div", { class: "keypad-row ops" },
+      ["+", "−", "×", "÷", "(", ")"].map((op) => key(op, () => set(appendToken(getInput().value, op)), "key op"))),
+    el("div", { class: "keypad-row edit" },
+      key("⌫", () => set(removeLastToken(getInput().value)), "key edit", t("keypad-back")),
+      key(t("keypad-clear"), () => set(""), "key edit")));
+
+  // Apaga los números que ya se han usado tantas veces como salen.
+  function refresh() {
+    const uses = numberUses(getInput().value);
+    const seen = {};
+    numbers.forEach((n, i) => {
+      seen[n] = (seen[n] || 0) + 1;
+      numberButtons[i].disabled = seen[n] <= (uses[n] || 0);
+    });
+  }
+  pad.refresh = refresh;
+  refresh();
+  return pad;
+}
+
 // --- Respuestas ---
 
 function renderAnswers(game, r, board) {
   const letters = r.type === "letters";
   const inputs = {};
+  const items = {};
+  // Un solo teclado, debajo del jugador que se está rellenando.
+  let active = game.players[0];
+  let pad = null;
+  // Al tocar el campo de otro jugador, el teclado se mueve debajo de él.
+  const activate = (p) => {
+    if (letters || active === p) return;
+    active = p;
+    items[p].append(pad);
+    pad.refresh();
+  };
   const list = el("ul", { class: "answers" }, game.players.map((p, i) => {
     const preview = el("p", { class: "preview" });
     const input = el("input", {
@@ -728,16 +805,30 @@ function renderAnswers(game, r, board) {
       autocomplete: "off",
       autocapitalize: "off",
       spellcheck: "false",
+      // En cifras se usa el teclado de la pantalla, así que no se abre el del móvil.
+      inputmode: letters ? null : "none",
       oninput: (e) => {
         r.answers[p] = e.target.value;
         save();
-        if (!letters) preview.textContent = previewExpression(e.target.value, r.numbers);
+        if (!letters) {
+          preview.textContent = previewExpression(e.target.value, r.numbers);
+          pad?.refresh();
+        }
       },
+      onfocus: () => activate(p),
+      onclick: () => activate(p),
     });
     inputs[p] = input;
     if (!letters) preview.textContent = previewExpression(r.answers[p] || "", r.numbers);
-    return el("li", {}, el("label", { for: `ans-${i}` }, p), input, letters ? null : preview);
+    const item = el("li", {}, el("label", { for: `ans-${i}` }, p), input, letters ? null : preview);
+    items[p] = item;
+    return item;
   }));
+  if (!letters) {
+    pad = keypad(r.numbers, () => inputs[active]);
+    items[active].append(pad);
+    pad.refresh();
+  }
 
   const status = el("p", { class: "hint" });
   const check = el("button", { class: "btn big", type: "button", onclick: async () => {
@@ -1056,7 +1147,7 @@ function renderPracticeNumbers() {
     return show(...parts);
   }
 
-  const input = el("input", { class: "input", placeholder: t("expr-placeholder"), value: p.tried || "", autocomplete: "off", autocapitalize: "off", spellcheck: "false" });
+  const input = el("input", { class: "input", placeholder: t("expr-placeholder"), value: p.tried || "", autocomplete: "off", autocapitalize: "off", spellcheck: "false", inputmode: "none", oninput: () => { pad.refresh(); check(); } });
   const result = el("p", { class: "preview" });
   const check = () => {
     p.tried = input.value;
@@ -1071,6 +1162,7 @@ function renderPracticeNumbers() {
     }
   };
 
+  const pad = keypad(p.numbers, () => input);
   const sol = p.solution;
   const hints = [];
   if (p.hint >= 1) hints.push(sol ? (sol.distance === 0 ? t("hint-exact") : t("hint-closest", { value: fmt(sol.value) })) : t("solving"));
@@ -1083,6 +1175,7 @@ function renderPracticeNumbers() {
       el("h2", {}, t("try-expr")),
       el("form", { class: "row", onsubmit: (e) => { e.preventDefault(); check(); } }, input, el("button", { class: "btn", type: "submit" }, t("try"))),
       result,
+      pad,
       hints.map((h) => el("p", { class: "notice" }, h)),
       el("div", { class: "practice-actions", style: "margin-top: 12px" },
         button(t("hint"), () => { p.hint++; p.tried = input.value; render(); }, "btn ghost"),

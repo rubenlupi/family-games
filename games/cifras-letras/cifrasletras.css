@@ -188,6 +188,33 @@
 .footer-links .link-btn { margin: 0; }
 .notice { padding: 12px 14px; border-radius: 12px; background: var(--bg); border: 1px dashed var(--border); }
 
+/* ---------- Teclado de operaciones ---------- */
+
+.keypad { display: grid; gap: 8px; margin-top: 10px; }
+.keypad-row { display: grid; gap: 6px; }
+.keypad-row.nums { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.keypad-row.ops { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.keypad-row.edit { grid-template-columns: 1fr 2fr; }
+.key {
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+.key:active { transform: scale(0.96); }
+.key.num { background: var(--tile-face); color: var(--tile-text); border: 2px solid var(--accent); }
+.key.num.large { background: var(--accent); color: #fff; }
+.key.op { font-size: 1.4rem; }
+.key.edit { font-size: 1rem; }
+.key:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
 @media (max-width: 380px) {
   .practice-actions { grid-template-columns: 1fr; }
 }
