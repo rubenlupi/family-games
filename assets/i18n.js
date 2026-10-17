@@ -81,7 +81,7 @@ const I18N = (() => {
   function helpHtml(game) {
     if (game !== "home") return t(`help.${game}`);
     // En el panel se explican todos los juegos.
-    return t("help.home") + ["reverse", "impostor", "cripticos", "cifras"].map((g) => t(`help.${g}`)).join("");
+    return t("help.home") + ["reverse", "impostor", "cripticos", "cifras", "calculo"].map((g) => t(`help.${g}`)).join("");
   }
 
   function buildTools() {
@@ -171,6 +171,31 @@ I18N.add({
       </ol>
       <p><strong>Puntos:</strong> el que más se acerca sin pasarse gana 1 punto (si hay empate, todos los empatados).
         Si todos se pasan, nadie puntúa. ¡Ojo, que pasarse por 1 es perder!</p>`,
+    "help.calculo": `
+      <h2>🧮 Cálculo Mental</h2>
+      <p>Para jugar en familia mirando la misma pantalla y respondiendo en voz alta. Primero aprendéis trucos de cálculo mental
+        y luego competís para ver quién los usa más rápido.</p>
+      <p><strong>Jugadores:</strong> 1 o más (mejor 2 o más), con una sola pantalla.</p>
+      <ol>
+        <li><strong>Aprender:</strong> cada estrategia se explica con un ejemplo paso a paso y por qué funciona.</li>
+        <li><strong>Practicar:</strong> 5 ejercicios guiados, sin puntos. Podéis pedir una pista o ver la solución con todos los pasos.</li>
+        <li>Tras 5 estrategias (un bloque), llega la <strong>ronda de competición</strong>: sale una operación cada vez y quien diga
+          primero la respuesta correcta gana el punto. Un jugador toca «Ver solución» y marca quién ha ganado (o «Nadie»).
+          «Pasar» salta la operación.</li>
+        <li>No se dice qué estrategia usar: reconocerla es parte del juego, y cualquier forma de llegar a la respuesta vale.
+          Al ver la solución aparecen las formas rápidas de resolverla.</li>
+        <li>Después viene el siguiente bloque. Las rondas mezclan lo nuevo con todo lo aprendido antes.</li>
+      </ol>
+      <p>Hay 4 bloques: sumas y restas, multiplicar, más multiplicación y división, y trucos avanzados.
+        La <strong>dificultad</strong> (fácil desde 10 años, media o difícil para adultos) se puede cambiar en cualquier momento.
+        El progreso y el marcador se guardan en este navegador para continuar otro día, y en «Repasar estrategias» podéis elegir
+        las que queráis practicar o usar en una ronda.</p>
+      <h3>Fuentes</h3>
+      <p class="sources">Las estrategias se han contrastado con
+        <a href="https://en.wikibooks.org/wiki/Mental_Math" target="_blank" rel="noopener">Mental Math</a> (Wikibooks, CC BY-SA),
+        <a href="https://github.com/Open-Apps-Studio/mental-math" target="_blank" rel="noopener">Open-Apps-Studio/mental-math</a> (MIT) y
+        <a href="https://worldmentalcalculation.com/learning-training/" target="_blank" rel="noopener">World Mental Calculation</a>.
+        Los textos, ejemplos y ejercicios de este juego son propios: no se ha copiado contenido de estas fuentes.</p>`,
     "help.cripticos": `
       <h2>🧩 Crípticos</h2>
       <p>Pistas de crucigrama críptico: cada frase esconde una palabra. Tiene dos partes: una
@@ -233,6 +258,31 @@ I18N.add({
       </ol>
       <p><strong>Points:</strong> whoever gets closest without going over wins 1 point (all tied players if there's a tie).
         If everyone goes over, nobody scores. Careful: going over by 1 is a loss!</p>`,
+    "help.calculo": `
+      <h2>🧮 Mental Maths</h2>
+      <p>For playing as a family looking at the same screen and answering out loud. First you learn mental maths tricks,
+        then you compete to see who uses them fastest.</p>
+      <p><strong>Players:</strong> 1 or more (best with 2 or more), on a single screen.</p>
+      <ol>
+        <li><strong>Learn:</strong> each strategy is explained with a step-by-step example and why it works.</li>
+        <li><strong>Practise:</strong> 5 guided exercises, no points. You can ask for a hint or show the answer with every step.</li>
+        <li>After 5 strategies (one block) comes the <strong>competition round</strong>: one sum at a time, and whoever says the
+          right answer first wins the point. One player taps “Show answer” and marks who won (or “Nobody”).
+          “Skip” moves on to the next sum.</li>
+        <li>Nobody tells you which strategy to use: spotting it is part of the game, and any way of getting the answer counts.
+          When the answer is shown, you'll see quick ways to solve it.</li>
+        <li>Then comes the next block. Rounds mix the new strategies with everything learned before.</li>
+      </ol>
+      <p>There are 4 blocks: adding and subtracting, multiplying, more multiplying and dividing, and advanced tricks.
+        The <strong>difficulty</strong> (easy from age 10, medium, or hard for adults) can be changed at any time.
+        Progress and the scoreboard are saved in this browser so you can carry on another day, and in “Review strategies” you can
+        pick the ones you want to practise or use in a round.</p>
+      <h3>Sources</h3>
+      <p class="sources">The strategies were checked against
+        <a href="https://en.wikibooks.org/wiki/Mental_Math" target="_blank" rel="noopener">Mental Math</a> (Wikibooks, CC BY-SA),
+        <a href="https://github.com/Open-Apps-Studio/mental-math" target="_blank" rel="noopener">Open-Apps-Studio/mental-math</a> (MIT) and
+        <a href="https://worldmentalcalculation.com/learning-training/" target="_blank" rel="noopener">World Mental Calculation</a>.
+        The texts, examples and exercises in this game are original: no content was copied from these sources.</p>`,
     "help.cripticos": `
       <h2>🧩 Cryptics</h2>
       <p>Cryptic crossword clues: each sentence hides a word. A clue has two parts: a
@@ -298,6 +348,31 @@ I18N.add({
       </ol>
       <p><strong>Points :</strong> le plus proche sans dépasser gagne 1 point (tous les ex æquo en cas d'égalité).
         Si tout le monde dépasse, personne ne marque. Attention : dépasser de 1, c'est perdre !</p>`,
+    "help.calculo": `
+      <h2>🧮 Calcul Mental</h2>
+      <p>Pour jouer en famille devant le même écran en répondant à voix haute. D'abord, vous apprenez des astuces de calcul mental,
+        puis vous faites la course pour voir qui les utilise le plus vite.</p>
+      <p><strong>Joueurs :</strong> 1 ou plus (idéalement 2 ou plus), sur un seul écran.</p>
+      <ol>
+        <li><strong>Apprendre :</strong> chaque stratégie est expliquée avec un exemple pas à pas et pourquoi elle marche.</li>
+        <li><strong>S'entraîner :</strong> 5 exercices guidés, sans points. On peut demander un indice ou voir la réponse avec toutes les étapes.</li>
+        <li>Après 5 stratégies (un bloc) vient la <strong>manche de compétition</strong> : un calcul à la fois, et le premier qui dit
+          la bonne réponse gagne le point. Un joueur touche « Voir la réponse » et indique qui a gagné (ou « Personne »).
+          « Passer » saute le calcul.</li>
+        <li>On ne dit pas quelle stratégie utiliser : la repérer fait partie du jeu, et toutes les façons d'arriver au résultat sont valables.
+          Avec la réponse, on voit les façons rapides de le résoudre.</li>
+        <li>Ensuite vient le bloc suivant. Les manches mélangent les nouveautés avec tout ce qui a été appris.</li>
+      </ol>
+      <p>Il y a 4 blocs : additions et soustractions, multiplier, encore multiplier et diviser, et astuces avancées.
+        La <strong>difficulté</strong> (facile dès 10 ans, moyenne ou difficile pour adultes) peut changer à tout moment.
+        La progression et le classement sont enregistrés dans ce navigateur pour continuer un autre jour, et dans « Réviser les stratégies »
+        vous pouvez choisir celles à travailler ou à utiliser dans une manche.</p>
+      <h3>Sources</h3>
+      <p class="sources">Les stratégies ont été vérifiées à partir de
+        <a href="https://en.wikibooks.org/wiki/Mental_Math" target="_blank" rel="noopener">Mental Math</a> (Wikibooks, CC BY-SA),
+        <a href="https://github.com/Open-Apps-Studio/mental-math" target="_blank" rel="noopener">Open-Apps-Studio/mental-math</a> (MIT) et
+        <a href="https://worldmentalcalculation.com/learning-training/" target="_blank" rel="noopener">World Mental Calculation</a>.
+        Les textes, exemples et exercices de ce jeu sont originaux : aucun contenu de ces sources n'a été copié.</p>`,
     "help.cripticos": `
       <h2>🧩 Cryptiques</h2>
       <p>Des définitions de mots croisés cryptiques : chaque phrase cache un mot. Elle a deux parties : une

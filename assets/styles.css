@@ -10,6 +10,7 @@
   --c-impostor: #e2574c;
   --c-cripticos: #2fa37a;
   --c-cifras: #b45309;
+  --c-calculo: #6d28d9;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -211,6 +212,9 @@ select.tool { padding-right: 8px; }
 .help-body strong { color: var(--text); }
 .help-body ol, .help-body ul { padding-left: 20px; }
 .help-body li + li { margin-top: 6px; }
+.help-body h3 { margin: 16px 0 4px; font-size: 1rem; }
+.help-body .sources { font-size: 0.85rem; }
+.help-body a { color: inherit; }
 .help-dialog form { margin-top: 20px; }
 header .topbar { margin-bottom: 4px; }
 header .topbar h1 { margin: 0; }

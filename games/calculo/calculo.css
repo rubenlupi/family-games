@@ -1,0 +1,109 @@
+.page.narrow { max-width: 560px; }
+
+.label { margin: 0 0 4px; color: var(--muted); font-size: 0.9rem; font-weight: 600; }
+
+.player-list { list-style: none; margin: 0 0 12px; padding: 0; }
+.player-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--border);
+}
+.player-list button { border: none; background: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; }
+
+.segmented { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.segmented button {
+  padding: 10px 8px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.segmented button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+
+/* Progreso por bloques */
+.blocks { list-style: none; margin: 0; padding: 0; }
+.blocks > li + li { margin-top: 12px; }
+.blocks h3 { margin: 0 0 6px; font-size: 1rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.chip.done { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* Estrategia */
+.strategy-title { display: flex; gap: 10px; align-items: center; margin: 0 0 8px; font-size: 1.35rem; }
+.strategy-title span { font-size: 1.8rem; }
+.example { margin-top: 16px; padding: 16px; border-radius: 14px; background: var(--bg); border: 1px solid var(--border); }
+.example h3, .why h3 { margin: 0 0 8px; font-size: 1rem; }
+.why { margin-top: 16px; }
+.why p { margin: 0; color: var(--muted); }
+
+.steps { margin: 12px 0 0; padding-left: 22px; }
+.steps li + li { margin-top: 6px; }
+
+/* Operación grande */
+.op {
+  margin: 12px 0;
+  font-size: clamp(2.1rem, 11vw, 3.4rem);
+  font-weight: 800;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.op .q { color: var(--muted); }
+.answer { color: var(--accent); }
+.op-card { text-align: center; padding: 24px 16px; }
+.op-card .hint { margin-top: 0; }
+
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.actions .btn { width: 100%; }
+.actions.one { grid-template-columns: 1fr; }
+
+.hint-box { margin: 12px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--bg); border: 1px dashed var(--border); text-align: left; }
+.solution { text-align: left; margin-top: 16px; }
+.solution h3 { margin: 0 0 4px; font-size: 1rem; }
+.way + .way { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+/* Ronda */
+.round-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.mini-scores { display: flex; flex-wrap: wrap; gap: 6px; }
+.mini-scores span { padding: 4px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); font-size: 0.85rem; font-weight: 600; }
+
+.who { margin: 0 0 8px; font-weight: 700; text-align: center; }
+.players-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 8px; }
+.players-grid .btn { width: 100%; }
+
+.link-btn {
+  display: block;
+  margin: 8px auto 0;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.scores { list-style: none; margin: 0; padding: 0; }
+.scores li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 4px; border-bottom: 1px solid var(--border); }
+.scores li:last-child { border-bottom: none; }
+.scores .pts { font-weight: 700; }
+.scores li.top { color: var(--accent); font-weight: 800; }
+
+/* Repaso */
+.review-list { list-style: none; margin: 0; padding: 0; }
+.review-list li { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.review-list label { flex: 1; display: flex; gap: 10px; align-items: center; cursor: pointer; }
+.review-list input { width: 20px; height: 20px; accent-color: var(--accent); }
+.review-list .btn { padding: 6px 12px; font-size: 0.85rem; }
+

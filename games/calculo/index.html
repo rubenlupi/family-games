@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cálculo Mental · Family Games</title>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="stylesheet" href="calculo.css">
+</head>
+<body data-game="calculo">
+  <main class="page narrow" style="--accent: var(--c-calculo)">
+    <div class="topbar">
+      <a class="back" href="../../" data-i18n="back">← Volver al panel</a>
+      <div class="tools"></div>
+    </div>
+    <header>
+      <h1 data-i18n="title">🧮 Cálculo Mental</h1>
+    </header>
+
+    <!-- Todas las pantallas se pintan aquí desde calculo.js -->
+    <section id="screen" aria-live="polite"></section>
+  </main>
+
+  <script src="../../assets/i18n.js"></script>
+  <script src="strategies.js"></script>
+  <script src="calculo.js"></script>
+</body>
+</html>
