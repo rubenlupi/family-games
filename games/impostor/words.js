@@ -1,5 +1,6 @@
-// Palabras por categoría. Para añadir una categoría, añade una entrada nueva.
-const CATEGORIES = {
+// Palabras por categoría, en español (CATEGORIES_ES) y en inglés (CATEGORIES_EN).
+// Para añadir una categoría, añade una entrada nueva.
+const CATEGORIES_ES = {
   "Animales": [
     "Perro", "Gato", "Elefante", "Jirafa", "León", "Delfín", "Pingüino", "Caballo",
     "Serpiente", "Tortuga", "Mono", "Oso", "Conejo", "Águila", "Tiburón", "Vaca",
@@ -69,5 +70,78 @@ const CATEGORIES = {
     "Reyes Magos", "Excursión", "Vacaciones", "Concierto", "Graduación",
     "Fiesta de pijamas", "Picnic", "Barbacoa", "Feria", "Fuegos artificiales",
     "Desfile", "San Juan", "Bautizo", "Partido de fútbol"
+  ]
+};
+
+const CATEGORIES_EN = {
+  "Animals": [
+    "Dog", "Cat", "Elephant", "Giraffe", "Lion", "Dolphin", "Penguin", "Horse",
+    "Snake", "Turtle", "Monkey", "Bear", "Rabbit", "Eagle", "Shark", "Cow",
+    "Octopus", "Kangaroo", "Crocodile", "Butterfly", "Whale", "Owl", "Zebra", "Hippo",
+    "Rhino", "Wolf", "Fox", "Squirrel", "Bat", "Bee", "Ant", "Snail",
+    "Parrot", "Flamingo", "Camel", "Koala", "Panda", "Jellyfish", "Frog", "Chicken"
+  ],
+  "Food": [
+    "Pizza", "Pancakes", "Omelette", "Ice cream", "Burger", "Hot dog", "Sushi",
+    "Chocolate", "Macaroni", "Soup", "Doughnut", "Salad", "Popcorn",
+    "Strawberry", "Banana", "Watermelon", "Cheese", "Sandwich", "Beans", "Cake",
+    "Spaghetti", "Fried egg", "Chips", "Bacon", "Bread", "Cookies", "Yoghurt",
+    "Orange", "Apple", "Grapes", "Pineapple", "Carrot", "Tomato", "Meatballs", "Muffin",
+    "Taco", "Cereal", "Pie", "Toast", "Lollipop"
+  ],
+  "Places": [
+    "Beach", "Hospital", "School", "Airport", "Supermarket", "Cinema", "Museum",
+    "Swimming pool", "Library", "Zoo", "Mountain", "Restaurant", "Theme park",
+    "Stadium", "Church", "Pharmacy", "Castle", "Farm", "Circus", "Hairdresser's",
+    "Train station", "Petrol station", "Gym", "Bakery", "Police station", "Prison",
+    "Desert", "Jungle", "Island", "Cave", "Ship", "Nightclub", "Hotel", "Campsite",
+    "Theatre", "Market", "Aquarium", "Ice rink", "Lighthouse", "Lift"
+  ],
+  "Things at home": [
+    "Fridge", "Sofa", "Washing machine", "Bed", "Mirror", "Microwave", "Broom",
+    "Lamp", "Pillow", "Toaster", "Shower", "Remote control", "Clock",
+    "Umbrella", "Spoon", "Towel", "Window", "Rug", "Iron", "Key",
+    "Television", "Bathtub", "Oven", "Fork", "Frying pan", "Curtain", "Wardrobe", "Chair",
+    "Table", "Toothbrush", "Hairdryer", "Vacuum cleaner", "Plug", "Tap", "Blanket",
+    "Coat hanger", "Bin", "Doorbell", "Stairs", "Plant pot"
+  ],
+  "Jobs": [
+    "Doctor", "Firefighter", "Teacher", "Police officer", "Chef", "Pilot", "Astronaut",
+    "Dentist", "Hairdresser", "Plumber", "Vet", "Baker", "Postman",
+    "Footballer", "Painter", "Magician", "Singer", "Farmer", "Lifeguard", "Judge",
+    "Nurse", "Taxi driver", "Waiter", "Electrician", "Carpenter", "Architect",
+    "Journalist", "Actor", "Clown", "Scientist", "Detective", "Pirate", "Gardener",
+    "Mechanic", "Photographer", "Lawyer", "Fisherman", "Builder", "Dancer", "YouTuber"
+  ],
+  "Sports": [
+    "Football", "Basketball", "Tennis", "Swimming", "Cycling", "Skiing", "Golf",
+    "Boxing", "Surfing", "Athletics", "Handball", "Volleyball", "Padel", "Karate",
+    "Skating", "Climbing", "Rugby", "Gymnastics", "Chess", "Bowling",
+    "Judo", "Hockey", "Baseball", "Table tennis", "Water polo", "Rowing", "Fencing",
+    "Archery", "Snowboarding", "Marathon", "Long jump", "Snooker", "Darts",
+    "Formula 1", "Motorcycling", "Sailing", "Diving", "Yoga", "Skateboarding", "Horse riding"
+  ],
+  "Transport": [
+    "Car", "Bus", "Train", "Plane", "Bicycle", "Motorbike", "Helicopter",
+    "Submarine", "Scooter", "Underground", "Taxi", "Lorry", "Ambulance", "Tractor",
+    "Hot-air balloon", "Rocket", "Sailing boat", "Canoe", "Cable car", "Caravan",
+    "Tow truck", "Tram", "Skateboard", "Fire engine", "Cruise ship"
+  ],
+  "Clothes": [
+    "T-shirt", "Trousers", "Socks", "Trainers", "Scarf", "Woolly hat", "Coat",
+    "Dress", "Skirt", "Pyjamas", "Swimsuit", "Gloves", "Tie", "Belt",
+    "Boots", "Flip-flops", "Sunglasses", "Hat", "Jumper", "Jacket",
+    "Hoodie", "Backpack", "Costume", "Cape", "Uniform"
+  ],
+  "Instruments": [
+    "Guitar", "Piano", "Drums", "Violin", "Flute", "Trumpet", "Saxophone",
+    "Harp", "Accordion", "Drum", "Xylophone", "Cello", "Bagpipes", "Harmonica",
+    "Tambourine", "Castanets", "Ukulele", "Triangle", "Organ", "Microphone"
+  ],
+  "Parties and events": [
+    "Birthday", "Christmas", "Wedding", "Halloween", "Carnival", "New Year's Eve",
+    "Easter", "School trip", "Holidays", "Concert", "Graduation",
+    "Sleepover", "Picnic", "Barbecue", "Funfair", "Fireworks",
+    "Parade", "Bonfire Night", "Christening", "Football match"
   ]
 };

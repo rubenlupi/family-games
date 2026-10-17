@@ -7,47 +7,50 @@
   <link rel="stylesheet" href="../../assets/styles.css">
   <link rel="stylesheet" href="impostor.css">
 </head>
-<body>
+<body data-game="impostor">
   <main class="page narrow" style="--accent: var(--c-impostor)">
-    <a class="back" href="../../">← Volver al panel</a>
+    <div class="topbar">
+      <a class="back" href="../../" data-i18n="back">← Volver al panel</a>
+      <div class="tools"></div>
+    </div>
     <header>
-      <h1>🕵️ El Impostor</h1>
+      <h1 data-i18n="title">🕵️ El Impostor</h1>
     </header>
 
     <!-- 1. Ajustes -->
     <section id="screen-setup">
       <div class="card">
-        <h2>Jugadores</h2>
+        <h2 data-i18n="players">Jugadores</h2>
         <ul id="player-list" class="player-list"></ul>
         <form id="add-player" class="row">
-          <input id="player-name" class="input" placeholder="Nombre" maxlength="20" autocomplete="off">
-          <button class="btn" type="submit">Añadir</button>
+          <input id="player-name" class="input" placeholder="Nombre" data-i18n-placeholder="name" maxlength="20" autocomplete="off">
+          <button class="btn" type="submit" data-i18n="add">Añadir</button>
         </form>
-        <p class="hint">Mínimo 3 jugadores.</p>
+        <p class="hint" data-i18n="min-players">Mínimo 3 jugadores.</p>
       </div>
 
       <div class="card">
-        <h2>Impostores</h2>
+        <h2 data-i18n="impostors">Impostores</h2>
         <div class="stepper">
-          <button class="btn ghost" type="button" id="imp-less" aria-label="Menos impostores">−</button>
+          <button class="btn ghost" type="button" id="imp-less" aria-label="Menos impostores" data-i18n-aria="imp-less">−</button>
           <span id="imp-count">1</span>
-          <button class="btn ghost" type="button" id="imp-more" aria-label="Más impostores">+</button>
+          <button class="btn ghost" type="button" id="imp-more" aria-label="Más impostores" data-i18n-aria="imp-more">+</button>
         </div>
       </div>
 
       <div class="card">
-        <h2>Categorías</h2>
+        <h2 data-i18n="categories">Categorías</h2>
         <div id="category-list" class="chips"></div>
       </div>
 
       <div class="card">
         <label class="toggle">
           <input type="checkbox" id="hint-toggle">
-          <span>El impostor ve la categoría como pista</span>
+          <span data-i18n="hint-toggle">El impostor ve la categoría como pista</span>
         </label>
       </div>
 
-      <button class="btn big" id="start" type="button">Empezar partida</button>
+      <button class="btn big" id="start" type="button" data-i18n="start">Empezar partida</button>
     </section>
 
     <!-- 2. Reparto de palabras: el móvil pasa de mano en mano -->
@@ -57,12 +60,12 @@
         <div id="deal-pass">
           <p class="pass-to" id="deal-label"></p>
           <p class="player-big" id="deal-name"></p>
-          <button class="btn big" id="deal-show" type="button">Ver mi palabra</button>
+          <button class="btn big" id="deal-show" type="button" data-i18n="deal-show">Ver mi palabra</button>
         </div>
         <div id="deal-secret" class="hidden">
           <p class="secret" id="deal-word"></p>
           <p class="hint" id="deal-extra"></p>
-          <button class="btn big" id="deal-next" type="button">Ocultar y pasar</button>
+          <button class="btn big" id="deal-next" type="button" data-i18n="deal-next">Ocultar y pasar</button>
         </div>
       </div>
     </section>
@@ -70,12 +73,12 @@
     <!-- 3. Partida -->
     <section id="screen-play" class="hidden">
       <div class="card deal">
-        <p class="pass-to">Empieza</p>
+        <p class="pass-to" data-i18n="first">Empieza</p>
         <p class="player-big" id="first-player"></p>
-        <p class="hint">Por turnos, cada uno dice una palabra relacionada con la palabra secreta.
+        <p class="hint" data-i18n="play-hint">Por turnos, cada uno dice una palabra relacionada con la palabra secreta.
           Después, votad quién creéis que es el impostor.</p>
       </div>
-      <button class="btn big" id="reveal" type="button">Revelar impostor</button>
+      <button class="btn big" id="reveal" type="button" data-i18n="reveal">Revelar impostor</button>
     </section>
 
     <!-- 4. Solución -->
@@ -83,16 +86,17 @@
       <div class="card deal">
         <p class="pass-to" id="result-label"></p>
         <p class="player-big" id="result-impostors"></p>
-        <p class="pass-to">La palabra era</p>
+        <p class="pass-to" data-i18n="word-was">La palabra era</p>
         <p class="secret" id="result-word"></p>
       </div>
       <div class="stack">
-        <button class="btn big" id="again" type="button">Otra ronda</button>
-        <button class="btn big ghost" id="settings" type="button">Cambiar ajustes</button>
+        <button class="btn big" id="again" type="button" data-i18n="again">Otra ronda</button>
+        <button class="btn big ghost" id="settings" type="button" data-i18n="settings">Cambiar ajustes</button>
       </div>
     </section>
   </main>
 
+  <script src="../../assets/i18n.js"></script>
   <script src="words.js"></script>
   <script src="impostor.js"></script>
 </body>

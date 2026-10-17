@@ -1,8 +1,5 @@
 .page.narrow { max-width: 560px; }
 
-.how-to summary { cursor: pointer; font-weight: 600; }
-.how-to ul { padding-left: 20px; }
-.how-to p, .how-to li { color: var(--muted); }
 
 .clue-nav {
   display: flex;

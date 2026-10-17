@@ -6,35 +6,54 @@
   <title>Family Games</title>
   <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body>
+<body data-game="home">
   <main class="page">
     <header>
-      <h1>🎲 Family Games</h1>
-      <p>Elige un juego y ¡a jugar!</p>
+      <div class="topbar">
+        <h1>🎲 Family Games</h1>
+        <div class="tools"></div>
+      </div>
+      <p data-i18n="home.subtitle">Elige un juego y ¡a jugar!</p>
     </header>
 
     <section class="games">
       <a class="game-card" href="games/reverse-words/" style="--accent: var(--c-reverse)">
         <span class="icon">🔄</span>
         <h2>Reverse Words</h2>
-        <p>Palabras al revés: ¿quién las descifra antes?</p>
-        <span class="play">Jugar</span>
+        <p data-i18n="home.reverse">Palabras al revés: ¿quién las descifra antes?</p>
+        <span class="play" data-i18n="home.play">Jugar</span>
       </a>
 
       <a class="game-card" href="games/impostor/" style="--accent: var(--c-impostor)">
         <span class="icon">🕵️</span>
-        <h2>El Impostor</h2>
-        <p>Todos conocen la palabra… menos uno. Descubre al impostor.</p>
-        <span class="play">Jugar</span>
+        <h2 data-i18n="impostor.title">El Impostor</h2>
+        <p data-i18n="home.impostor">Todos conocen la palabra… menos uno. Descubre al impostor.</p>
+        <span class="play" data-i18n="home.play">Jugar</span>
       </a>
 
       <a class="game-card" href="games/cripticos/" style="--accent: var(--c-cripticos)">
         <span class="icon">🧩</span>
-        <h2>Crípticos</h2>
-        <p>Pistas crípticas para mentes retorcidas.</p>
-        <span class="play">Jugar</span>
+        <h2 data-i18n="cripticos.title">Crípticos</h2>
+        <p data-i18n="home.cripticos">Pistas crípticas para mentes retorcidas.</p>
+        <span class="play" data-i18n="home.play">Jugar</span>
       </a>
     </section>
   </main>
+
+  <script src="assets/i18n.js"></script>
+  <script>
+    I18N.add({
+      es: {},
+      en: {
+        "home.subtitle": "Pick a game and let's play!",
+        "home.reverse": "Words played backwards: who can crack them first?",
+        "home.impostor": "Everyone knows the word… except one. Find the impostor.",
+        "home.cripticos": "Cryptic clues for twisted minds.",
+        "home.play": "Play",
+        "impostor.title": "The Impostor",
+        "cripticos.title": "Cryptics",
+      },
+    });
+  </script>
 </body>
 </html>

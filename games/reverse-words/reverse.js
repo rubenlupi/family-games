@@ -1,3 +1,53 @@
+I18N.add({
+  es: {
+    "title.page": "Reverse Words · Family Games",
+    "see-word": "👀 Toca para ver la palabra",
+    "see-answer": "Toca para ver la solución",
+    "no-rec": "Este navegador no permite grabar audio.",
+    "no-mic": "No hay permiso para usar el micrófono. Actívalo en los ajustes del navegador.",
+    "recorded": "Grabado ({time}) · toca para repetir",
+    "rec-failed": "No se ha podido procesar la grabación. Prueba otra vez.",
+    "recording": "Grabando… {time} · toca para parar",
+    "tap-record": "Toca para grabar",
+    "tap-imitate": "Grábate imitando lo que oyes",
+  },
+  en: {
+    "title.page": "Reverse Words · Family Games",
+    "back": "← Games",
+    "progress": "Progress",
+    "player1": "Player 1",
+    "player2": "Player 2",
+    "say": "Say this word",
+    "new-word": "🎲 Change word",
+    "record": "Record",
+    "tap-record": "Tap to record",
+    "to-step-2": "Done · Pass the phone to player 2 →",
+    "listen": "Listen and imitate it",
+    "play-rev": "Play<br>backwards",
+    "my-rec": "My<br>recording",
+    "record-imitation": "Record imitation",
+    "tap-imitate": "Record yourself imitating what you hear",
+    "to-step-3": "Flip it around →",
+    "guess": "What's the word?",
+    "play-fwd": "Play it forwards",
+    "play-orig": "Play the original",
+    "new-round": "New round",
+    "see-word": "👀 Tap to see the word",
+    "see-answer": "Tap to see the answer",
+    "no-rec": "This browser can't record audio.",
+    "no-mic": "No permission to use the microphone. Turn it on in your browser settings.",
+    "recorded": "Recorded ({time}) · tap to redo",
+    "rec-failed": "The recording couldn't be processed. Try again.",
+    "recording": "Recording… {time} · tap to stop",
+  },
+});
+
+const { t } = I18N;
+document.title = t("title.page");
+
+// Palabras en el idioma elegido.
+const WORDS = I18N.lang === "en" ? WORDS_EN : WORDS_ES;
+
 const $ = (id) => document.getElementById(id);
 
 let audioCtx = null;
@@ -37,8 +87,8 @@ function newWord() {
   let next;
   do { next = WORDS[Math.floor(Math.random() * WORDS.length)]; } while (next === word && WORDS.length > 1);
   word = next;
-  cover($("word"), "👀 Toca para ver la palabra");
-  cover($("answer"), "Toca para ver la solución");
+  cover($("word"), t("see-word"));
+  cover($("answer"), t("see-answer"));
 }
 
 // Mientras está tapada no se pinta la palabra.
@@ -56,10 +106,10 @@ function toggleWord(el, coverText) {
   }
 }
 
-$("word").onclick = () => toggleWord($("word"), "👀 Toca para ver la palabra");
+$("word").onclick = () => toggleWord($("word"), t("see-word"));
 $("new-word").onclick = newWord;
 $("answer").onclick = () => {
-  toggleWord($("answer"), "Toca para ver la solución");
+  toggleWord($("answer"), t("see-answer"));
   $("play-1").classList.remove("hidden");
 };
 
@@ -114,14 +164,14 @@ async function startRecording(player) {
   getAudioContext(); // se crea dentro del toque del usuario (necesario en iPhone)
 
   if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
-    setMessage("Este navegador no permite grabar audio.");
+    setMessage(t("no-rec"));
     return;
   }
   let stream;
   try {
     stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   } catch (e) {
-    setMessage("No hay permiso para usar el micrófono. Actívalo en los ajustes del navegador.");
+    setMessage(t("no-mic"));
     return;
   }
 
@@ -137,20 +187,20 @@ async function startRecording(player) {
       const blob = new Blob(chunks, { type: recorder.mimeType });
       const buffer = await getAudioContext().decodeAudioData(await blob.arrayBuffer());
       takes[player] = { buffer, reversed: reverseBuffer(buffer) };
-      label.textContent = `Grabado (${formatTime(buffer.duration * 1000)}) · toca para repetir`;
+      label.textContent = t("recorded", { time: formatTime(buffer.duration * 1000) });
       onRecorded(player);
     } catch (e) {
-      label.textContent = "Toca para grabar";
-      setMessage("No se ha podido procesar la grabación. Prueba otra vez.");
+      label.textContent = t("tap-record");
+      setMessage(t("rec-failed"));
     }
   };
 
   recorder.start();
   mic.classList.add("recording");
   const startedAt = Date.now();
-  label.textContent = "Grabando… 00:00 · toca para parar";
+  label.textContent = t("recording", { time: "00:00" });
   const timer = setInterval(() => {
-    label.textContent = `Grabando… ${formatTime(Date.now() - startedAt)} · toca para parar`;
+    label.textContent = t("recording", { time: formatTime(Date.now() - startedAt) });
   }, 250);
   active = { recorder, timer, player };
   setMessage("");
@@ -198,8 +248,8 @@ $("to-step-3").onclick = () => {
 $("new-round").onclick = () => {
   stopRecording();
   takes[1] = takes[2] = null;
-  $("rec-1-label").textContent = "Toca para grabar";
-  $("rec-2-label").textContent = "Grábate imitando lo que oyes";
+  $("rec-1-label").textContent = t("tap-record");
+  $("rec-2-label").textContent = t("tap-imitate");
   $("to-step-2").classList.add("hidden");
   $("to-step-3").classList.add("hidden");
   $("play-2").disabled = true;

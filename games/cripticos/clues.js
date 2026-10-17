@@ -5,7 +5,7 @@
 //   type        tipo de juego de palabras
 //   answer      solución en mayúsculas, sin tildes ni espacios (la Ñ sí vale)
 //   explanation cómo se resuelve
-const CLUES = [
+const CLUES_ES = [
   {
     id: "roma",
     clue: "Ciudad eterna con amor desordenado (4)",

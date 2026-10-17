@@ -1,3 +1,60 @@
+I18N.add({
+  es: {
+    "title.page": "El Impostor · Family Games",
+    "remove": "Quitar a {name}",
+    "progress": "Jugador {n} de {total}",
+    "turn-of": "Turno de",
+    "pass-to": "Pásale el móvil a",
+    "you-impostor": "Eres el impostor",
+    "hint": "Pista: {category}",
+    "blend-in": "Disimula y descubre la palabra.",
+    "category": "Categoría: {category}",
+    "impostor-was": "El impostor era",
+    "impostors-were": "Los impostores eran",
+    "and": " y ",
+  },
+  en: {
+    "title.page": "The Impostor · Family Games",
+    "back": "← Back to games",
+    "title": "🕵️ The Impostor",
+    "players": "Players",
+    "name": "Name",
+    "add": "Add",
+    "min-players": "At least 3 players.",
+    "impostors": "Impostors",
+    "imp-less": "Fewer impostors",
+    "imp-more": "More impostors",
+    "categories": "Categories",
+    "hint-toggle": "The impostor sees the category as a hint",
+    "start": "Start game",
+    "deal-show": "See my word",
+    "deal-next": "Hide and pass",
+    "first": "Starting player",
+    "play-hint": "Taking turns, everyone says one word related to the secret word. Then vote for who you think the impostor is.",
+    "reveal": "Reveal impostor",
+    "word-was": "The word was",
+    "again": "Another round",
+    "settings": "Change settings",
+    "remove": "Remove {name}",
+    "progress": "Player {n} of {total}",
+    "turn-of": "Your turn,",
+    "pass-to": "Pass the phone to",
+    "you-impostor": "You are the impostor",
+    "hint": "Hint: {category}",
+    "blend-in": "Blend in and figure out the word.",
+    "category": "Category: {category}",
+    "impostor-was": "The impostor was",
+    "impostors-were": "The impostors were",
+    "and": " and ",
+  },
+});
+
+const { t } = I18N;
+document.title = t("title.page");
+
+// Las palabras van en el idioma elegido.
+const CATEGORIES = I18N.lang === "en" ? CATEGORIES_EN : CATEGORIES_ES;
+
 const STORAGE_KEY = "family-games:impostor";
 const MIN_PLAYERS = 3;
 
@@ -46,7 +103,7 @@ function renderSetup() {
     const remove = document.createElement("button");
     remove.type = "button";
     remove.textContent = "✕";
-    remove.setAttribute("aria-label", `Quitar a ${name}`);
+    remove.setAttribute("aria-label", t("remove", { name }));
     remove.onclick = () => {
       settings.players.splice(i, 1);
       update();
@@ -144,9 +201,9 @@ function show(screenId) {
 
 function showDealTurn() {
   const name = settings.players[round.turn];
-  $("deal-progress").textContent = `Jugador ${round.turn + 1} de ${settings.players.length}`;
+  $("deal-progress").textContent = t("progress", { n: round.turn + 1, total: settings.players.length });
   // El primero ya tiene el móvil: no tiene sentido decirle que se lo pase.
-  $("deal-label").textContent = round.turn === 0 ? "Turno de" : "Pásale el móvil a";
+  $("deal-label").textContent = t(round.turn === 0 ? "turn-of" : "pass-to");
   $("deal-name").textContent = name;
   $("deal-pass").classList.remove("hidden");
   $("deal-secret").classList.add("hidden");
@@ -158,13 +215,13 @@ $("deal-show").onclick = () => {
   const name = settings.players[round.turn];
   const isImpostor = round.impostors.includes(name);
   const word = $("deal-word");
-  word.textContent = isImpostor ? "Eres el impostor" : round.word;
+  word.textContent = isImpostor ? t("you-impostor") : round.word;
   word.classList.toggle("impostor", isImpostor);
 
   let extra = "";
-  if (isImpostor && settings.hint) extra = `Pista: ${round.category}`;
-  else if (isImpostor) extra = "Disimula y descubre la palabra.";
-  else extra = `Categoría: ${round.category}`;
+  if (isImpostor && settings.hint) extra = t("hint", { category: round.category });
+  else if (isImpostor) extra = t("blend-in");
+  else extra = t("category", { category: round.category });
   $("deal-extra").textContent = extra;
 
   $("deal-pass").classList.add("hidden");
@@ -182,8 +239,8 @@ $("deal-next").onclick = () => {
 };
 
 $("reveal").onclick = () => {
-  $("result-label").textContent = round.impostors.length > 1 ? "Los impostores eran" : "El impostor era";
-  $("result-impostors").textContent = round.impostors.join(" y ");
+  $("result-label").textContent = t(round.impostors.length > 1 ? "impostors-were" : "impostor-was");
+  $("result-impostors").textContent = round.impostors.join(t("and"));
   $("result-word").textContent = round.word;
   show("screen-result");
 };

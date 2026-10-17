@@ -1,5 +1,53 @@
-const STORAGE_KEY = "family-games:cripticos";
-const KEY_ROWS = ["QWERTYUIOP", "ASDFGHJKLÑ", "ZXCVBNM"];
+I18N.add({
+  es: {
+    "title.page": "Crípticos · Family Games",
+    "letter": "Letra {n}",
+    "no-hints": "sin pistas 🤯",
+    "one-hint": "con 1 pista",
+    "n-hints": "con {n} pistas",
+    "solution": "Solución",
+    "correct": "¡Correcto! Resuelta {hints}",
+    "missing": "Faltan letras.",
+    "wrong": "No es correcto. ¡Sigue intentándolo!",
+    "confirm-solution": "¿Seguro que quieres ver la solución?",
+    "delete": "Borrar",
+  },
+  en: {
+    "title.page": "Cryptics · Family Games",
+    "back": "← Back to games",
+    "title": "🧩 Cryptics",
+    "prev": "Previous clue",
+    "next": "Next clue",
+    "random": "Random unsolved clue",
+    "hints": "💡 Hints",
+    "check": "Check",
+    "hint.definition": "Highlight the definition",
+    "hint.type": "Wordplay type",
+    "hint.letter": "Reveal a letter",
+    "hint.solution": "See the answer",
+    "go-next": "Next clue →",
+    "letter": "Letter {n}",
+    "no-hints": "without hints 🤯",
+    "one-hint": "with 1 hint",
+    "n-hints": "with {n} hints",
+    "solution": "Answer",
+    "correct": "Correct! Solved {hints}",
+    "missing": "Some letters are missing.",
+    "wrong": "Not quite. Keep trying!",
+    "confirm-solution": "Are you sure you want to see the answer?",
+    "delete": "Delete",
+  },
+});
+
+const { t } = I18N;
+const EN = I18N.lang === "en";
+document.title = t("title.page");
+
+// Cada idioma tiene sus propias pistas, teclado y progreso guardado.
+const CLUES = EN ? CLUES_EN : CLUES_ES;
+const STORAGE_KEY = EN ? "family-games:cripticos:en" : "family-games:cripticos";
+const KEY_ROWS = ["QWERTYUIOP", EN ? "ASDFGHJKL" : "ASDFGHJKLÑ", "ZXCVBNM"];
+const LETTER = EN ? /^[A-Z]$/ : /^[A-ZÑ]$/;
 
 const $ = (id) => document.getElementById(id);
 
@@ -82,7 +130,7 @@ function render() {
     box.type = "button";
     box.className = "box";
     box.textContent = ch;
-    box.setAttribute("aria-label", `Letra ${i + 1}`);
+    box.setAttribute("aria-label", t("letter", { n: i + 1 }));
     if (p.revealed.includes(i)) box.classList.add("revealed");
     if (i === cursor && !p.solved) box.classList.add("active");
     box.onclick = () => {
@@ -102,8 +150,8 @@ function render() {
 
   if (p.solved) {
     $("hint-menu").classList.add("hidden");
-    const hints = p.hints === 0 ? "sin pistas 🤯" : `con ${p.hints} pista${p.hints > 1 ? "s" : ""}`;
-    $("message").textContent = p.gaveUp ? "Solución" : `¡Correcto! Resuelta ${hints}`;
+    const hints = p.hints === 0 ? t("no-hints") : p.hints === 1 ? t("one-hint") : t("n-hints", { n: p.hints });
+    $("message").textContent = p.gaveUp ? t("solution") : t("correct", { hints });
   }
 
   // Las ayudas ya usadas (o que ya no aportan nada) se desactivan.
@@ -159,7 +207,7 @@ function check() {
   const p = progressOf(current.clue);
   const guess = current.letters.join("");
   if (guess.length < current.clue.answer.length) {
-    $("message").textContent = "Faltan letras.";
+    $("message").textContent = t("missing");
     return;
   }
   if (guess === current.clue.answer) {
@@ -167,7 +215,7 @@ function check() {
     saveState();
     render();
   } else {
-    $("message").textContent = "No es correcto. ¡Sigue intentándolo!";
+    $("message").textContent = t("wrong");
     const boxes = $("boxes");
     boxes.classList.remove("wrong");
     void boxes.offsetWidth; // reinicia la animación
@@ -192,7 +240,7 @@ function useHint(kind) {
     current.letters[target] = answer[target];
     moveCursor(current.cursor);
   } else if (kind === "solution") {
-    if (!confirm("¿Seguro que quieres ver la solución?")) return;
+    if (!confirm(t("confirm-solution"))) return;
     p.solved = true;
     p.gaveUp = true;
     current.letters = current.clue.answer.split("");
@@ -221,7 +269,7 @@ function buildKeyboard() {
       del.type = "button";
       del.className = "wide";
       del.textContent = "⌫";
-      del.setAttribute("aria-label", "Borrar");
+      del.setAttribute("aria-label", t("delete"));
       del.onclick = backspace;
       div.append(del);
     }
@@ -232,7 +280,7 @@ function buildKeyboard() {
 document.addEventListener("keydown", (e) => {
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   const key = e.key.toUpperCase();
-  if (/^[A-ZÑ]$/.test(key)) { typeLetter(key); e.preventDefault(); }
+  if (LETTER.test(key)) { typeLetter(key); e.preventDefault(); }
   else if (e.key === "Backspace") { backspace(); e.preventDefault(); }
   else if (e.key === "Enter") {
     if (progressOf(current.clue).solved) loadClue(state.index + 1);
