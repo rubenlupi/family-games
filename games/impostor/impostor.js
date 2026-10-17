@@ -47,13 +47,47 @@ I18N.add({
     "impostors-were": "The impostors were",
     "and": " and ",
   },
+  fr: {
+    "title.page": "L'Imposteur · Family Games",
+    "back": "← Retour aux jeux",
+    "title": "🕵️ L'Imposteur",
+    "players": "Joueurs",
+    "name": "Prénom",
+    "add": "Ajouter",
+    "min-players": "3 joueurs minimum.",
+    "impostors": "Imposteurs",
+    "imp-less": "Moins d'imposteurs",
+    "imp-more": "Plus d'imposteurs",
+    "categories": "Catégories",
+    "hint-toggle": "L'imposteur voit la catégorie comme indice",
+    "start": "Commencer la partie",
+    "deal-show": "Voir mon mot",
+    "deal-next": "Cacher et passer",
+    "first": "Commence",
+    "play-hint": "Chacun son tour, chacun dit un mot lié au mot secret. Ensuite, votez pour celui que vous pensez être l'imposteur.",
+    "reveal": "Révéler l'imposteur",
+    "word-was": "Le mot était",
+    "again": "Nouvelle manche",
+    "settings": "Modifier les réglages",
+    "remove": "Retirer {name}",
+    "progress": "Joueur {n} sur {total}",
+    "turn-of": "À toi,",
+    "pass-to": "Passe le téléphone à",
+    "you-impostor": "Tu es l'imposteur",
+    "hint": "Indice : {category}",
+    "blend-in": "Passe inaperçu et devine le mot.",
+    "category": "Catégorie : {category}",
+    "impostor-was": "L'imposteur était",
+    "impostors-were": "Les imposteurs étaient",
+    "and": " et ",
+  },
 });
 
 const { t } = I18N;
 document.title = t("title.page");
 
 // Las palabras van en el idioma elegido.
-const CATEGORIES = I18N.lang === "en" ? CATEGORIES_EN : CATEGORIES_ES;
+const CATEGORIES = { es: CATEGORIES_ES, en: CATEGORIES_EN, fr: CATEGORIES_FR }[I18N.lang];
 
 const STORAGE_KEY = "family-games:impostor";
 const MIN_PLAYERS = 3;

@@ -1,4 +1,4 @@
-// Palabras por categoría, en español (CATEGORIES_ES) y en inglés (CATEGORIES_EN).
+// Palabras por categoría, en español (CATEGORIES_ES), inglés (CATEGORIES_EN) y francés (CATEGORIES_FR).
 // Para añadir una categoría, añade una entrada nueva.
 const CATEGORIES_ES = {
   "Animales": [
@@ -143,5 +143,78 @@ const CATEGORIES_EN = {
     "Easter", "School trip", "Holidays", "Concert", "Graduation",
     "Sleepover", "Picnic", "Barbecue", "Funfair", "Fireworks",
     "Parade", "Bonfire Night", "Christening", "Football match"
+  ]
+};
+
+const CATEGORIES_FR = {
+  "Animaux": [
+    "Chien", "Chat", "Éléphant", "Girafe", "Lion", "Dauphin", "Pingouin", "Cheval",
+    "Serpent", "Tortue", "Singe", "Ours", "Lapin", "Aigle", "Requin", "Vache",
+    "Pieuvre", "Kangourou", "Crocodile", "Papillon", "Baleine", "Hibou", "Zèbre", "Hippopotame",
+    "Rhinocéros", "Loup", "Renard", "Écureuil", "Chauve-souris", "Abeille", "Fourmi", "Escargot",
+    "Perroquet", "Flamant rose", "Chameau", "Koala", "Panda", "Méduse", "Grenouille", "Poule"
+  ],
+  "Nourriture": [
+    "Pizza", "Crêpe", "Omelette", "Glace", "Hamburger", "Croissant", "Sushi",
+    "Chocolat", "Pâtes", "Soupe", "Baguette", "Salade", "Pop-corn",
+    "Fraise", "Banane", "Pastèque", "Fromage", "Sandwich", "Lentilles", "Gâteau",
+    "Spaghettis", "Œuf au plat", "Frites", "Jambon", "Pain", "Biscuits", "Yaourt",
+    "Orange", "Pomme", "Raisin", "Ananas", "Carotte", "Tomate", "Quiche", "Madeleine",
+    "Beignet", "Croque-monsieur", "Taco", "Céréales", "Ratatouille"
+  ],
+  "Lieux": [
+    "Plage", "Hôpital", "École", "Aéroport", "Supermarché", "Cinéma", "Musée",
+    "Piscine", "Bibliothèque", "Zoo", "Montagne", "Restaurant", "Parc d'attractions",
+    "Stade", "Église", "Pharmacie", "Château", "Ferme", "Cirque", "Coiffeur",
+    "Gare", "Station-service", "Salle de sport", "Boulangerie", "Commissariat", "Prison",
+    "Désert", "Jungle", "Île", "Grotte", "Bateau", "Discothèque", "Hôtel", "Camping",
+    "Théâtre", "Marché", "Aquarium", "Patinoire", "Phare", "Ascenseur"
+  ],
+  "Objets de la maison": [
+    "Frigo", "Canapé", "Machine à laver", "Lit", "Miroir", "Micro-ondes", "Balai",
+    "Lampe", "Oreiller", "Grille-pain", "Douche", "Télécommande", "Horloge",
+    "Parapluie", "Cuillère", "Serviette", "Fenêtre", "Tapis", "Fer à repasser", "Clé",
+    "Télévision", "Baignoire", "Four", "Fourchette", "Poêle", "Rideau", "Armoire", "Chaise",
+    "Table", "Brosse à dents", "Sèche-cheveux", "Aspirateur", "Prise", "Robinet", "Couverture",
+    "Cintre", "Poubelle", "Sonnette", "Escalier", "Pot de fleurs"
+  ],
+  "Métiers": [
+    "Médecin", "Pompier", "Professeur", "Policier", "Cuisinier", "Pilote", "Astronaute",
+    "Dentiste", "Coiffeur", "Plombier", "Vétérinaire", "Boulanger", "Facteur",
+    "Footballeur", "Peintre", "Magicien", "Chanteur", "Agriculteur", "Maître-nageur", "Juge",
+    "Infirmier", "Chauffeur de taxi", "Serveur", "Électricien", "Menuisier", "Architecte",
+    "Journaliste", "Acteur", "Clown", "Scientifique", "Détective", "Pirate", "Jardinier",
+    "Mécanicien", "Photographe", "Avocat", "Pêcheur", "Maçon", "Danseur", "Youtubeur"
+  ],
+  "Sports": [
+    "Football", "Basket", "Tennis", "Natation", "Cyclisme", "Ski", "Golf",
+    "Boxe", "Surf", "Athlétisme", "Handball", "Volley", "Padel", "Karaté",
+    "Patinage", "Escalade", "Rugby", "Gymnastique", "Échecs", "Bowling",
+    "Judo", "Hockey", "Baseball", "Ping-pong", "Water-polo", "Aviron", "Escrime",
+    "Tir à l'arc", "Snowboard", "Marathon", "Saut en longueur", "Billard", "Fléchettes",
+    "Formule 1", "Moto", "Voile", "Plongée", "Yoga", "Skate", "Équitation"
+  ],
+  "Transports": [
+    "Voiture", "Bus", "Train", "Avion", "Vélo", "Moto", "Hélicoptère",
+    "Sous-marin", "Trottinette", "Métro", "Taxi", "Camion", "Ambulance", "Tracteur",
+    "Montgolfière", "Fusée", "Voilier", "Canoë", "Téléphérique", "Caravane",
+    "Dépanneuse", "Tramway", "Planche à roulettes", "Camion de pompiers", "Paquebot"
+  ],
+  "Vêtements": [
+    "T-shirt", "Pantalon", "Chaussettes", "Baskets", "Écharpe", "Bonnet", "Manteau",
+    "Robe", "Jupe", "Pyjama", "Maillot de bain", "Gants", "Cravate", "Ceinture",
+    "Bottes", "Tongs", "Lunettes de soleil", "Chapeau", "Pull", "Veste",
+    "Sweat", "Sac à dos", "Déguisement", "Cape", "Uniforme"
+  ],
+  "Instruments": [
+    "Guitare", "Piano", "Batterie", "Violon", "Flûte", "Trompette", "Saxophone",
+    "Harpe", "Accordéon", "Tambour", "Xylophone", "Violoncelle", "Cornemuse", "Harmonica",
+    "Tambourin", "Castagnettes", "Ukulélé", "Triangle", "Orgue", "Micro"
+  ],
+  "Fêtes et événements": [
+    "Anniversaire", "Noël", "Mariage", "Halloween", "Carnaval", "Réveillon",
+    "Galette des rois", "Sortie scolaire", "Vacances", "Concert", "Remise des diplômes",
+    "Soirée pyjama", "Pique-nique", "Barbecue", "Fête foraine", "Feu d'artifice",
+    "Défilé", "14 Juillet", "Baptême", "Match de foot"
   ]
 };

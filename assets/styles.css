@@ -174,7 +174,7 @@ header p {
 
 .topbar .back { margin: 0; }
 
-.tools { display: flex; gap: 8px; margin-left: auto; }
+.tools { display: flex; flex-shrink: 0; gap: 8px; margin-left: auto; }
 
 .tool {
   padding: 6px 12px;
@@ -185,10 +185,12 @@ header p {
   font: inherit;
   font-size: 0.9rem;
   font-weight: 600;
+  white-space: nowrap;
   cursor: pointer;
 }
 
 .tool:hover { border-color: var(--muted); }
+select.tool { padding-right: 8px; }
 
 .help-dialog {
   width: min(560px, calc(100vw - 32px));

@@ -1,27 +1,30 @@
-// Idiomas de la web (español / inglés) y botón de ayuda.
+// Idiomas de la web (español / inglés / francés) y botón de ayuda.
 //
 // - Los textos fijos del HTML llevan data-i18n="clave" (texto), data-i18n-html (HTML),
 //   data-i18n-aria (aria-label) o data-i18n-placeholder. El HTML trae el texto en español,
 //   que es lo que se ve si falta una traducción.
-// - Cada juego añade sus textos con I18N.add({ es: {...}, en: {...} }) y usa I18N.t("clave").
-// - Si la página tiene un elemento .tools se pintan ahí los botones de ayuda e idioma.
+// - Cada juego añade sus textos con I18N.add({ es: {...}, en: {...}, fr: {...} }) y usa I18N.t("clave").
+// - Si la página tiene un elemento .tools se pintan ahí el botón de ayuda y el selector de idioma.
 //   La ayuda que se muestra depende de <body data-game="...">.
 const I18N = (() => {
   const STORAGE_KEY = "family-games:lang";
-  const LANGS = ["es", "en"];
+  const LANGS = ["es", "en", "fr"];
 
   const strings = {
     es: {
       "tools.help": "Ayuda",
-      "tools.lang": "EN",
-      "tools.lang.aria": "Switch to English",
+      "tools.lang": "Idioma",
       "help.close": "Cerrar",
     },
     en: {
       "tools.help": "Help",
-      "tools.lang": "ES",
-      "tools.lang.aria": "Cambiar a español",
+      "tools.lang": "Language",
       "help.close": "Close",
+    },
+    fr: {
+      "tools.help": "Aide",
+      "tools.lang": "Langue",
+      "help.close": "Fermer",
     },
   };
 
@@ -30,10 +33,10 @@ const I18N = (() => {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (LANGS.includes(saved)) return saved;
     } catch (e) { /* sin almacenamiento */ }
-    // Por defecto español; inglés solo si el navegador prefiere inglés y no tiene español.
-    const prefs = (navigator.languages || [navigator.language || ""]).map((l) => l.toLowerCase());
-    if (prefs.some((l) => l.startsWith("es"))) return "es";
-    return prefs[0]?.startsWith("en") ? "en" : "es";
+    // Por defecto español; si el navegador no tiene español, el primero que tenga de los otros.
+    const prefs = (navigator.languages || [navigator.language || ""]).map((l) => l.toLowerCase().slice(0, 2));
+    if (prefs.includes("es")) return "es";
+    return prefs.find((l) => LANGS.includes(l)) || "es";
   }
 
   const lang = detect();
@@ -101,12 +104,11 @@ const I18N = (() => {
     help.innerHTML = `<span aria-hidden="true">?</span> ${t("tools.help")}`;
     help.onclick = () => dialog.showModal();
 
-    const switcher = document.createElement("button");
-    switcher.type = "button";
+    const switcher = document.createElement("select");
     switcher.className = "tool";
-    switcher.textContent = t("tools.lang");
-    switcher.setAttribute("aria-label", t("tools.lang.aria"));
-    switcher.onclick = () => setLang(lang === "es" ? "en" : "es");
+    switcher.setAttribute("aria-label", t("tools.lang"));
+    LANGS.forEach((l) => switcher.add(new Option(l.toUpperCase(), l, false, l === lang)));
+    switcher.onchange = () => setLang(switcher.value);
 
     tools.append(help, switcher);
   }
@@ -127,7 +129,7 @@ I18N.add({
     "help.home": `
       <h2>🎲 Family Games</h2>
       <p>Juegos para jugar en familia con un solo móvil. Elige un juego en el panel; dentro de cada uno
-        tienes el botón <strong>? Ayuda</strong> con sus reglas. Con el botón <strong>EN</strong> cambias la web a inglés.</p>`,
+        tienes el botón <strong>? Ayuda</strong> con sus reglas. Con el selector <strong>ES</strong> cambias el idioma (español, inglés o francés).</p>`,
     "help.reverse": `
       <h2>🔄 Reverse Words</h2>
       <p>Un jugador graba una palabra y el otro la oye <strong>al revés</strong>. Tiene que imitar ese sonido
@@ -175,7 +177,7 @@ I18N.add({
     "help.home": `
       <h2>🎲 Family Games</h2>
       <p>Games to play as a family with a single phone. Pick a game from the board; inside each one
-        the <strong>? Help</strong> button explains its rules. The <strong>ES</strong> button switches the site to Spanish.</p>`,
+        the <strong>? Help</strong> button explains its rules. The <strong>EN</strong> selector changes the language (Spanish, English or French).</p>`,
     "help.reverse": `
       <h2>🔄 Reverse Words</h2>
       <p>One player records a word and the other hears it <strong>backwards</strong>. They have to imitate that strange sound
@@ -218,5 +220,56 @@ I18N.add({
       <p>The number in brackets is how many letters the answer has. Type it on the keyboard and tap “Check”.
         If you get stuck, “💡 Hints” lets you highlight the definition, see the wordplay type, reveal a letter or see the answer.
         Your progress is saved in this browser.</p>`,
+  },
+});
+
+I18N.add({
+  fr: {
+    "help.home": `
+      <h2>🎲 Family Games</h2>
+      <p>Des jeux à jouer en famille avec un seul téléphone. Choisissez un jeu sur le panneau ; dans chacun,
+        le bouton <strong>? Aide</strong> explique les règles. Le sélecteur <strong>FR</strong> change la langue (espagnol, anglais ou français).</p>`,
+    "help.reverse": `
+      <h2>🔄 Reverse Words</h2>
+      <p>Un joueur enregistre un mot et l'autre l'écoute <strong>à l'envers</strong>. Il doit imiter ce son bizarre
+        et, quand l'appli retourne son imitation, deviner quel était le mot.</p>
+      <p><strong>Joueurs :</strong> 2 ou plus, par deux. Il faut autoriser le micro.</p>
+      <ol>
+        <li><strong>Joueur 1 :</strong> touchez la carte pour voir le mot (sans que l'autre le voie), touchez le micro et dites-le à voix haute. Touchez encore pour arrêter et passez le téléphone.</li>
+        <li><strong>Joueur 2 :</strong> écoutez l'enregistrement à l'envers autant de fois que vous voulez et enregistrez-vous en l'imitant le mieux possible.</li>
+        <li>L'appli retourne votre imitation : si vous l'avez bien imitée, on entend le mot d'origine ! Essayez de le deviner, puis touchez pour voir la réponse.</li>
+      </ol>
+      <p><strong>Conseils :</strong> parlez clairement et lentement. Les mots de 2 à 4 syllabes sont les plus amusants.
+        Si un mot ne vous plaît pas, utilisez « Changer de mot ».</p>`,
+    "help.impostor": `
+      <h2>🕵️ L'Imposteur</h2>
+      <p>Tout le monde reçoit le même mot secret… sauf l'imposteur, qui ne le connaît pas.
+        Les autres doivent le démasquer, et l'imposteur doit passer inaperçu.</p>
+      <p><strong>Joueurs :</strong> 3 ou plus, avec un seul téléphone.</p>
+      <ol>
+        <li>Ajoutez les joueurs, choisissez le nombre d'imposteurs et les catégories de mots.</li>
+        <li>Faites passer le téléphone : chacun touche « Voir mon mot », le mémorise et le cache avant de passer.
+          L'imposteur voit « Tu es l'imposteur » (et, si vous l'activez, la catégorie comme indice).</li>
+        <li>Chacun son tour, en commençant par le joueur choisi par l'appli, chacun dit <strong>un mot</strong> lié au mot secret.
+          Ni trop évident (l'imposteur le devinerait), ni trop bizarre (vous aurez l'air de l'imposteur).</li>
+        <li>Après un ou plusieurs tours, votez pour celui que vous pensez être l'imposteur et touchez « Révéler l'imposteur ».</li>
+      </ol>
+      <p><strong>Qui gagne :</strong> les autres, s'ils démasquent l'imposteur. L'imposteur, s'il n'est pas démasqué
+        ou s'il devine le mot secret.</p>`,
+    "help.cripticos": `
+      <h2>🧩 Cryptiques</h2>
+      <p>Des définitions de mots croisés cryptiques : chaque phrase cache un mot. Elle a deux parties : une
+        <strong>définition</strong> (au début ou à la fin) et un <strong>jeu de mots</strong> qui mène au même mot.</p>
+      <ul>
+        <li><strong>Anagramme :</strong> lettres mélangées (« en désordre », « bousculé », « en vrac »…).</li>
+        <li><strong>Mot caché :</strong> la réponse se cache à l'intérieur d'autres mots.</li>
+        <li><strong>Inversion :</strong> un mot lu à l'envers (« retourné », « à l'envers »…).</li>
+        <li><strong>Suppression :</strong> enlever des lettres (« étêté » = sans la première).</li>
+        <li><strong>Charade :</strong> plusieurs mots collés.</li>
+        <li><strong>Double définition :</strong> deux sens du même mot.</li>
+      </ul>
+      <p>Le nombre entre parenthèses indique combien de lettres a la réponse (sans accents ni tirets). Tapez-la au clavier et touchez « Vérifier ».
+        Si vous bloquez, « 💡 Indices » permet de surligner la définition, voir le type de jeu, révéler une lettre ou voir la réponse.
+        Votre progression est enregistrée dans ce navigateur.</p>`,
   },
 });

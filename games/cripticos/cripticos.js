@@ -37,17 +37,46 @@ I18N.add({
     "confirm-solution": "Are you sure you want to see the answer?",
     "delete": "Delete",
   },
+  fr: {
+    "title.page": "Cryptiques · Family Games",
+    "back": "← Retour aux jeux",
+    "title": "🧩 Cryptiques",
+    "prev": "Définition précédente",
+    "next": "Définition suivante",
+    "random": "Définition non résolue au hasard",
+    "hints": "💡 Indices",
+    "check": "Vérifier",
+    "hint.definition": "Surligner la définition",
+    "hint.type": "Type de jeu",
+    "hint.letter": "Révéler une lettre",
+    "hint.solution": "Voir la réponse",
+    "go-next": "Définition suivante →",
+    "letter": "Lettre {n}",
+    "no-hints": "sans indice 🤯",
+    "one-hint": "avec 1 indice",
+    "n-hints": "avec {n} indices",
+    "solution": "Réponse",
+    "correct": "Bravo ! Résolue {hints}",
+    "missing": "Il manque des lettres.",
+    "wrong": "Ce n'est pas ça. Continue !",
+    "confirm-solution": "Tu es sûr de vouloir voir la réponse ?",
+    "delete": "Effacer",
+  },
 });
 
 const { t } = I18N;
-const EN = I18N.lang === "en";
+const { lang } = I18N;
 document.title = t("title.page");
 
 // Cada idioma tiene sus propias pistas, teclado y progreso guardado.
-const CLUES = EN ? CLUES_EN : CLUES_ES;
-const STORAGE_KEY = EN ? "family-games:cripticos:en" : "family-games:cripticos";
-const KEY_ROWS = ["QWERTYUIOP", EN ? "ASDFGHJKL" : "ASDFGHJKLÑ", "ZXCVBNM"];
-const LETTER = EN ? /^[A-Z]$/ : /^[A-ZÑ]$/;
+const CLUES = { es: CLUES_ES, en: CLUES_EN, fr: CLUES_FR }[lang];
+const STORAGE_KEY = lang === "es" ? "family-games:cripticos" : `family-games:cripticos:${lang}`;
+const KEY_ROWS = {
+  es: ["QWERTYUIOP", "ASDFGHJKLÑ", "ZXCVBNM"],
+  en: ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"],
+  fr: ["AZERTYUIOP", "QSDFGHJKLM", "WXCVBN"],
+}[lang];
+const LETTER = lang === "es" ? /^[A-ZÑ]$/ : /^[A-Z]$/;
 
 const $ = (id) => document.getElementById(id);
 

@@ -22,3 +22,15 @@ const WORDS_EN = [
   "Time for bed", "Pass the salt", "It's so hot", "Happy birthday",
   "Abracadabra", "Supercalifragilistic", "See you later, alligator",
 ];
+
+const WORDS_FR = [
+  "Bonjour", "Banane", "Chocolat", "Éléphant", "Papillon", "Hélicoptère", "Patate",
+  "Crocodile", "Pingouin", "Hippopotame", "Spaghettis", "Sandwich", "Ananas",
+  "Requin", "Dinosaure", "Mamie", "Père Noël", "Super-héros", "Ornithorynque",
+  "Pop-corn", "Carotte", "Fantôme", "Château", "Licorne", "Anniversaire",
+  "Trampoline", "Pyjama", "Poule", "Confiture", "Balai", "Tortue", "Fusée",
+  "Bonne nuit", "Je t'aime", "On va à la plage", "J'ai mal au ventre",
+  "J'ai faim", "Quelle heure est-il ?", "Joyeux Noël", "Brosse-toi les dents",
+  "Au lit", "Passe-moi le sel", "Qu'il fait chaud", "Joyeux anniversaire",
+  "Abracadabra", "Supercalifragilistique", "À plus tard, alligator",
+];

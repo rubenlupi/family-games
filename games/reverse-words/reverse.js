@@ -40,13 +40,42 @@ I18N.add({
     "rec-failed": "The recording couldn't be processed. Try again.",
     "recording": "Recording… {time} · tap to stop",
   },
+  fr: {
+    "title.page": "Reverse Words · Family Games",
+    "back": "← Jeux",
+    "progress": "Progression",
+    "player1": "Joueur 1",
+    "player2": "Joueur 2",
+    "say": "Dis ce mot",
+    "new-word": "🎲 Changer de mot",
+    "record": "Enregistrer",
+    "tap-record": "Touche pour enregistrer",
+    "to-step-2": "C'est fait · Passe le téléphone au joueur 2 →",
+    "listen": "Écoute et imite",
+    "play-rev": "Écouter<br>à l'envers",
+    "my-rec": "Mon<br>enregistrement",
+    "record-imitation": "Enregistrer l'imitation",
+    "tap-imitate": "Enregistre-toi en imitant ce que tu entends",
+    "to-step-3": "Le retourner →",
+    "guess": "Quel est le mot ?",
+    "play-fwd": "Écouter à l'endroit",
+    "play-orig": "Écouter l'original",
+    "new-round": "Nouvelle manche",
+    "see-word": "👀 Touche pour voir le mot",
+    "see-answer": "Touche pour voir la réponse",
+    "no-rec": "Ce navigateur ne peut pas enregistrer de son.",
+    "no-mic": "Pas d'autorisation pour le micro. Active-la dans les réglages du navigateur.",
+    "recorded": "Enregistré ({time}) · touche pour recommencer",
+    "rec-failed": "Impossible de traiter l'enregistrement. Réessaie.",
+    "recording": "Enregistrement… {time} · touche pour arrêter",
+  },
 });
 
 const { t } = I18N;
 document.title = t("title.page");
 
 // Palabras en el idioma elegido.
-const WORDS = I18N.lang === "en" ? WORDS_EN : WORDS_ES;
+const WORDS = { es: WORDS_ES, en: WORDS_EN, fr: WORDS_FR }[I18N.lang];
 
 const $ = (id) => document.getElementById(id);
 
