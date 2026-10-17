@@ -9,6 +9,7 @@
   --c-reverse: #4f7cff;
   --c-impostor: #e2574c;
   --c-cripticos: #2fa37a;
+  --c-cifras: #b45309;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sin Pasarse · Family Games</title>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="stylesheet" href="sinpasarse.css">
+</head>
+<body data-game="cifras">
+  <main class="page narrow" style="--accent: var(--c-cifras)">
+    <div class="topbar">
+      <a class="back" href="../../" data-i18n="back">← Volver al panel</a>
+      <div class="tools"></div>
+    </div>
+    <header>
+      <h1 data-i18n="title">🌡️ Sin Pasarse</h1>
+    </header>
+
+    <!-- 1. Jugadores -->
+    <section id="screen-setup">
+      <div class="card">
+        <h2 data-i18n="players">Jugadores</h2>
+        <ul id="player-list" class="player-list"></ul>
+        <form id="add-player" class="row">
+          <input id="player-name" class="input" placeholder="Nombre" data-i18n-placeholder="name" maxlength="20" autocomplete="off">
+          <button class="btn" type="submit" data-i18n="add">Añadir</button>
+        </form>
+        <p class="hint" data-i18n="min-players">Mínimo 2 jugadores.</p>
+      </div>
+      <button class="btn big" id="start" type="button" data-i18n="start">Empezar partida</button>
+    </section>
+
+    <!-- 2. La pregunta, para todos -->
+    <section id="screen-question" class="hidden">
+      <div class="card deal">
+        <p class="hint" id="round-label"></p>
+        <p class="q-icon" id="q-icon"></p>
+        <p class="question" id="q-text"></p>
+        <p class="hint" data-i18n="rule">Gana quien más se acerque… ¡sin pasarse!</p>
+      </div>
+      <button class="btn big" id="to-deal" type="button" data-i18n="to-deal">Empezar a marcar</button>
+    </section>
+
+    <!-- 3. Cada jugador marca su número en secreto -->
+    <section id="screen-deal" class="hidden">
+      <div class="card deal" id="deal-pass">
+        <p class="hint" id="deal-progress"></p>
+        <p class="pass-to" id="deal-label"></p>
+        <p class="player-big" id="deal-name"></p>
+        <button class="btn big" id="deal-show" type="button" data-i18n="deal-show">Marcar mi número</button>
+      </div>
+
+      <div id="deal-pick" class="hidden">
+        <p class="pick-question" id="pick-question"></p>
+        <div class="readout">
+          <button class="value" id="value" type="button" aria-label="Escribir el número" data-i18n-aria="type-number"></button>
+          <input class="value-input hidden" id="value-input" type="number" inputmode="decimal" min="0">
+          <span class="unit" id="unit"></span>
+        </div>
+
+        <div class="thermo-wrap">
+          <div class="thermo" id="thermo" role="slider" tabindex="0" aria-label="Tu número" data-i18n-aria="your-number">
+            <div class="thermo-fill" id="thermo-fill"></div>
+            <div class="thermo-mark" id="thermo-mark"><span></span></div>
+          </div>
+          <div class="thermo-ticks" id="thermo-ticks"></div>
+          <div class="nudge">
+            <button class="btn ghost" id="up" type="button" aria-label="Subir" data-i18n-aria="up">▲</button>
+            <button class="btn ghost" id="down" type="button" aria-label="Bajar" data-i18n-aria="down">▼</button>
+          </div>
+        </div>
+
+        <button class="btn big" id="deal-next" type="button" data-i18n="deal-next">Confirmar y pasar</button>
+      </div>
+    </section>
+
+    <!-- 4. Respuesta y marcador -->
+    <section id="screen-result" class="hidden">
+      <div class="card deal">
+        <p class="pass-to" data-i18n="answer-was">La respuesta es</p>
+        <p class="secret" id="result-answer"></p>
+        <p class="hint" id="result-note"></p>
+      </div>
+      <div class="card">
+        <p class="verdict" id="verdict"></p>
+        <ol class="guesses" id="guesses"></ol>
+      </div>
+      <div class="card">
+        <h2 data-i18n="scoreboard">Marcador</h2>
+        <ol class="scores" id="scores"></ol>
+      </div>
+      <div class="stack">
+        <button class="btn big" id="next-question" type="button" data-i18n="next-question">Siguiente pregunta</button>
+        <button class="btn big ghost" id="settings" type="button" data-i18n="settings">Cambiar jugadores</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../assets/i18n.js"></script>
+  <script src="questions.js"></script>
+  <script src="questions-space.js"></script>
+  <script src="questions-geo.js"></script>
+  <script src="questions-people.js"></script>
+  <script src="questions-animals.js"></script>
+  <script src="questions-body.js"></script>
+  <script src="questions-history.js"></script>
+  <script src="questions-science.js"></script>
+  <script src="questions-sports.js"></script>
+  <script src="questions-culture.js"></script>
+  <script src="questions-everyday.js"></script>
+  <script src="sinpasarse.js"></script>
+</body>
+</html>

@@ -81,7 +81,7 @@ const I18N = (() => {
   function helpHtml(game) {
     if (game !== "home") return t(`help.${game}`);
     // En el panel se explican todos los juegos.
-    return t("help.home") + ["reverse", "impostor", "cripticos"].map((g) => t(`help.${g}`)).join("");
+    return t("help.home") + ["reverse", "impostor", "cripticos", "cifras"].map((g) => t(`help.${g}`)).join("");
   }
 
   function buildTools() {
@@ -157,6 +157,20 @@ I18N.add({
       </ol>
       <p><strong>Quién gana:</strong> los demás, si pillan al impostor. El impostor, si no le pillan
         o si adivina la palabra secreta.</p>`,
+    "help.cifras": `
+      <h2>🌡️ Sin Pasarse</h2>
+      <p>Preguntas cuya respuesta es una cifra: años, habitantes, distancias, animales que quedan en libertad…
+        Gana quien más se acerque <strong>sin pasarse</strong> del número real.</p>
+      <p><strong>Jugadores:</strong> 2 o más, con un solo móvil.</p>
+      <ol>
+        <li>Añade los jugadores y toca «Empezar partida». Se lee la pregunta en voz alta para todos.</li>
+        <li>Pasad el móvil: cada uno, en secreto, sube o baja la rayita del termómetro hasta su número.
+          Para afinar usa ▲▼ (mantenlos pulsados para ir más rápido) o toca el número para escribirlo.</li>
+        <li>Al confirmar, el número queda oculto y el móvil pasa al siguiente.</li>
+        <li>Cuando todos han marcado, se revela la respuesta con una curiosidad y quién gana la ronda.</li>
+      </ol>
+      <p><strong>Puntos:</strong> el que más se acerca sin pasarse gana 1 punto (si hay empate, todos los empatados).
+        Si todos se pasan, nadie puntúa. ¡Ojo, que pasarse por 1 es perder!</p>`,
     "help.cripticos": `
       <h2>🧩 Crípticos</h2>
       <p>Pistas de crucigrama críptico: cada frase esconde una palabra. Tiene dos partes: una
@@ -205,6 +219,20 @@ I18N.add({
       </ol>
       <p><strong>Who wins:</strong> everyone else, if they catch the impostor. The impostor, if they aren't caught
         or if they guess the secret word.</p>`,
+    "help.cifras": `
+      <h2>🌡️ Don't Go Over</h2>
+      <p>Questions whose answer is a number: years, populations, distances, animals left in the wild…
+        The player who gets closest <strong>without going over</strong> the real number wins.</p>
+      <p><strong>Players:</strong> 2 or more, with a single phone.</p>
+      <ol>
+        <li>Add the players and tap “Start game”. Read the question out loud to everyone.</li>
+        <li>Pass the phone around: each player, in secret, moves the line on the thermometer up or down to their number.
+          Fine-tune with ▲▼ (hold them to go faster) or tap the number to type it.</li>
+        <li>When you confirm, your number is hidden and the phone goes to the next player.</li>
+        <li>Once everyone has marked, the answer is revealed with a fun fact, along with who wins the round.</li>
+      </ol>
+      <p><strong>Points:</strong> whoever gets closest without going over wins 1 point (all tied players if there's a tie).
+        If everyone goes over, nobody scores. Careful: going over by 1 is a loss!</p>`,
     "help.cripticos": `
       <h2>🧩 Cryptics</h2>
       <p>Cryptic crossword clues: each sentence hides a word. A clue has two parts: a
@@ -256,6 +284,20 @@ I18N.add({
       </ol>
       <p><strong>Qui gagne :</strong> les autres, s'ils démasquent l'imposteur. L'imposteur, s'il n'est pas démasqué
         ou s'il devine le mot secret.</p>`,
+    "help.cifras": `
+      <h2>🌡️ Sans Dépasser</h2>
+      <p>Des questions dont la réponse est un nombre : années, habitants, distances, animaux encore sauvages…
+        Le joueur le plus proche <strong>sans dépasser</strong> le vrai nombre gagne.</p>
+      <p><strong>Joueurs :</strong> 2 ou plus, avec un seul téléphone.</p>
+      <ol>
+        <li>Ajoutez les joueurs et touchez « Commencer la partie ». Lisez la question à voix haute pour tout le monde.</li>
+        <li>Faites passer le téléphone : chacun, en secret, monte ou descend le trait du thermomètre jusqu'à son nombre.
+          Pour affiner, utilisez ▲▼ (restez appuyé pour aller plus vite) ou touchez le nombre pour l'écrire.</li>
+        <li>Une fois validé, le nombre est caché et le téléphone passe au suivant.</li>
+        <li>Quand tout le monde a marqué, la réponse s'affiche avec une anecdote et le gagnant de la manche.</li>
+      </ol>
+      <p><strong>Points :</strong> le plus proche sans dépasser gagne 1 point (tous les ex æquo en cas d'égalité).
+        Si tout le monde dépasse, personne ne marque. Attention : dépasser de 1, c'est perdre !</p>`,
     "help.cripticos": `
       <h2>🧩 Cryptiques</h2>
       <p>Des définitions de mots croisés cryptiques : chaque phrase cache un mot. Elle a deux parties : une

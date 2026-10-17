@@ -1,0 +1,169 @@
+.page.narrow { max-width: 520px; }
+
+.player-list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+}
+
+.player-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.player-list button {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.deal { text-align: center; padding: 28px 20px; }
+.pass-to { margin: 0; color: var(--muted); }
+.player-big { margin: 4px 0 24px; font-size: 2rem; font-weight: 700; }
+.secret { margin: 8px 0 12px; font-size: 2.2rem; font-weight: 800; color: var(--accent); }
+
+.q-icon { margin: 8px 0 0; font-size: 3rem; }
+.question { margin: 8px 0 16px; font-size: 1.4rem; font-weight: 700; }
+
+/* ---------- Termómetro ---------- */
+
+.pick-question { margin: 0 0 8px; font-weight: 600; text-align: center; }
+
+.readout {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.value {
+  padding: 0;
+  border: none;
+  border-bottom: 2px dashed var(--border);
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 2.4rem;
+  font-weight: 800;
+  cursor: text;
+}
+
+.value-input {
+  width: 9em;
+  padding: 4px 8px;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.unit { color: var(--muted); font-weight: 600; }
+
+.thermo-wrap {
+  --h: min(360px, 46vh);
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.thermo {
+  position: relative;
+  height: var(--h);
+  border-radius: 32px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.12);
+  touch-action: none;
+  cursor: ns-resize;
+  outline: none;
+}
+
+.thermo:focus-visible { box-shadow: 0 0 0 3px var(--accent); }
+
+.thermo-fill {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border-radius: 26px;
+  background: linear-gradient(to top, #4f7cff, #f0a500 55%, #e2574c);
+  background-size: 100% var(--h);
+  background-position: bottom;
+}
+
+/* La rayita que se sube y se baja */
+.thermo-mark {
+  position: absolute;
+  left: -8px;
+  width: calc(100% + 24px);
+  height: 0;
+  border-top: 4px solid var(--text);
+  border-radius: 2px;
+  transform: translateY(-2px);
+  pointer-events: none;
+}
+
+.thermo-mark span {
+  position: absolute;
+  right: -10px;
+  top: -12px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text);
+}
+
+.thermo-ticks {
+  position: relative;
+  height: var(--h);
+  pointer-events: none;
+}
+
+.thermo-ticks span {
+  position: absolute;
+  left: 18px;
+  transform: translateY(50%);
+  color: var(--muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.nudge { display: flex; flex-direction: column; gap: 12px; }
+.nudge .btn { width: 56px; height: 56px; padding: 0; font-size: 1.3rem; user-select: none; touch-action: manipulation; }
+
+/* ---------- Resultado ---------- */
+
+.verdict { margin: 0 0 12px; font-weight: 700; font-size: 1.1rem; }
+
+.guesses, .scores {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.guesses li, .scores li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.guesses li:last-child, .scores li:last-child { border-bottom: none; }
+.guesses .num { font-weight: 700; text-align: right; }
+.guesses .over { color: var(--muted); text-decoration: line-through; }
+.guesses .winner { color: var(--accent); font-weight: 800; }
+.scores .pts { font-weight: 700; }
