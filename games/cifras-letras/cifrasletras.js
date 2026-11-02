@@ -668,16 +668,21 @@ function pickControls(game, r) {
 
 // --- Tiempo ---
 
+// En iPhone, Web Audio se calla con el interruptor de silencio salvo que la página diga
+// que reproduce audio (iOS 17+), y el contexto pasa a "interrupted" al bloquear la pantalla
+// o cambiar de app, así que hay que reanudarlo también antes de pitar.
 let audioCtx = null;
 function unlockAudio() {
+  try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) { /* no soportado */ }
   try {
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === "suspended") audioCtx.resume();
+    if (!audioCtx || audioCtx.state === "closed") audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state !== "running") audioCtx.resume();
   } catch (e) { audioCtx = null; }
 }
 
 function beep() {
   if (!audioCtx) return;
+  if (audioCtx.state !== "running") audioCtx.resume().catch(() => {});
   try {
     [0, 0.25, 0.5].forEach((at, i) => {
       const osc = audioCtx.createOscillator();

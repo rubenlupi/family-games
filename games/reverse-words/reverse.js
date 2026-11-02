@@ -79,17 +79,21 @@ const WORDS = { es: WORDS_ES, en: WORDS_EN, fr: WORDS_FR }[I18N.lang];
 
 const $ = (id) => document.getElementById(id);
 
-let audioCtx = null;
-let currentSource = null; // lo que suena ahora mismo (solo uno a la vez)
+// En iPhone/iPad (Safari y Chrome usan el mismo motor) el audio se reproduce con un
+// <audio> y un WAV, no con Web Audio: Web Audio se silencia con el interruptor de
+// silencio y, tras usar el micrófono, sale bajísimo por el auricular o deja de sonar.
+const player = new Audio();
+player.preload = "auto";
+player.setAttribute("playsinline", "");
+let playingButton = null;
 
-// Grabaciones de la ronda: buffer normal y buffer al revés de cada jugador.
+// Grabaciones de la ronda: WAV normal y WAV al revés de cada jugador (URLs blob:).
 const takes = { 1: null, 2: null };
 let word = null;
 
-function getAudioContext() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === "suspended") audioCtx.resume();
-  return audioCtx;
+// iOS 17+: indica al sistema qué tipo de audio usa la página (altavoz, ignora el modo silencio).
+function setAudioSession(type) {
+  try { if (navigator.audioSession) navigator.audioSession.type = type; } catch (e) { /* no soportado */ }
 }
 
 function setMessage(text) {
@@ -144,39 +148,88 @@ $("answer").onclick = () => {
 
 // ---------- Audio ----------
 
-function reverseBuffer(buffer) {
-  const reversed = getAudioContext().createBuffer(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
-  for (let ch = 0; ch < buffer.numberOfChannels; ch++) {
-    const data = Float32Array.from(buffer.getChannelData(ch));
-    data.reverse();
-    reversed.copyToChannel(data, ch);
+// Decodifica la grabación a PCM. Se usa un OfflineAudioContext (no suena nada, así que
+// no le afectan las restricciones de reproducción de iOS) y, si falla, un AudioContext.
+async function decode(arrayBuffer) {
+  const Offline = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  const attempts = [];
+  if (Offline) attempts.push(() => new Offline(1, 1, 44100));
+  if (Ctx) attempts.push(() => new Ctx());
+  let lastError;
+  for (const make of attempts) {
+    const ctx = make();
+    try {
+      // slice(): Safari "consume" el ArrayBuffer aunque falle la decodificación.
+      return await new Promise((resolve, reject) => {
+        const p = ctx.decodeAudioData(arrayBuffer.slice(0), resolve, reject);
+        if (p && p.then) p.then(resolve, reject);
+      });
+    } catch (e) {
+      lastError = e;
+    } finally {
+      if (ctx.close) ctx.close().catch(() => {});
+    }
   }
-  return reversed;
+  throw lastError || new Error("decode");
+}
+
+// Mezcla los canales en mono.
+function toMono(buffer) {
+  const out = new Float32Array(buffer.length);
+  for (let ch = 0; ch < buffer.numberOfChannels; ch++) {
+    const data = buffer.getChannelData(ch);
+    for (let i = 0; i < data.length; i++) out[i] += data[i] / buffer.numberOfChannels;
+  }
+  return out;
+}
+
+// WAV PCM 16 bits mono.
+function toWav(samples, sampleRate) {
+  const view = new DataView(new ArrayBuffer(44 + samples.length * 2));
+  const str = (o, s) => { for (let i = 0; i < s.length; i++) view.setUint8(o + i, s.charCodeAt(i)); };
+  str(0, "RIFF"); view.setUint32(4, 36 + samples.length * 2, true); str(8, "WAVE");
+  str(12, "fmt "); view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true); view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+  str(36, "data"); view.setUint32(40, samples.length * 2, true);
+  for (let i = 0; i < samples.length; i++) {
+    const v = Math.max(-1, Math.min(1, samples[i]));
+    view.setInt16(44 + i * 2, v < 0 ? v * 0x8000 : v * 0x7fff, true);
+  }
+  return URL.createObjectURL(new Blob([view], { type: "audio/wav" }));
+}
+
+function releaseTake(take) {
+  if (!take) return;
+  URL.revokeObjectURL(take.forward);
+  URL.revokeObjectURL(take.reversed);
 }
 
 function stopPlayback() {
-  if (currentSource) {
-    currentSource.onended = null;
-    try { currentSource.stop(); } catch (e) { /* ya parado */ }
-    currentSource = null;
-  }
+  player.pause();
+  playingButton = null;
   document.querySelectorAll(".tile.playing").forEach((b) => b.classList.remove("playing"));
 }
 
-function play(buffer, button) {
-  if (!buffer) return;
+player.onended = player.onerror = () => {
+  if (playingButton) playingButton.classList.remove("playing");
+  playingButton = null;
+};
+
+function play(url, button) {
+  if (!url) return;
   stopPlayback();
-  const ctx = getAudioContext();
-  const source = ctx.createBufferSource();
-  source.buffer = buffer;
-  source.connect(ctx.destination);
-  source.onended = () => {
-    button.classList.remove("playing");
-    if (currentSource === source) currentSource = null;
-  };
+  setAudioSession("playback");
+  player.src = url;
+  player.currentTime = 0;
   button.classList.add("playing");
-  currentSource = source;
-  source.start();
+  playingButton = button;
+  const p = player.play();
+  if (p && p.catch) p.catch(() => {
+    button.classList.remove("playing");
+    if (playingButton === button) playingButton = null;
+  });
 }
 
 // ---------- Grabación ----------
@@ -190,37 +243,51 @@ let active = null; // { recorder, stream, timer, player }
 
 async function startRecording(player) {
   stopPlayback();
-  getAudioContext(); // se crea dentro del toque del usuario (necesario en iPhone)
 
   if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
     setMessage(t("no-rec"));
     return;
   }
+  setAudioSession("play-and-record");
   let stream;
   try {
     stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   } catch (e) {
-    setMessage(t("no-mic"));
+    setAudioSession("playback");
+    setMessage(e && e.name === "NotAllowedError" ? t("no-mic") : `${t("no-rec")} (${(e && e.name) || e})`);
     return;
   }
 
   const mic = $(`rec-${player}`);
   const label = $(`rec-${player}-label`);
   const chunks = [];
-  const recorder = new MediaRecorder(stream);
+  // Safari solo graba en mp4; Chrome/Firefox de escritorio en webm/ogg.
+  const type = ["audio/mp4", "audio/webm;codecs=opus", "audio/webm", "audio/ogg;codecs=opus"]
+    .find((m) => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m));
+  let recorder;
+  try {
+    recorder = type ? new MediaRecorder(stream, { mimeType: type }) : new MediaRecorder(stream);
+  } catch (e) {
+    recorder = new MediaRecorder(stream);
+  }
   recorder.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
   recorder.onstop = async () => {
     stream.getTracks().forEach((t) => t.stop());
+    setAudioSession("playback");
     mic.classList.remove("recording");
     try {
-      const blob = new Blob(chunks, { type: recorder.mimeType });
-      const buffer = await getAudioContext().decodeAudioData(await blob.arrayBuffer());
-      takes[player] = { buffer, reversed: reverseBuffer(buffer) };
+      const blob = new Blob(chunks, { type: recorder.mimeType || type || "" });
+      const buffer = await decode(await blob.arrayBuffer());
+      const samples = toMono(buffer);
+      const forward = toWav(samples, buffer.sampleRate);
+      const reversed = toWav(samples.slice().reverse(), buffer.sampleRate);
+      releaseTake(takes[player]);
+      takes[player] = { forward, reversed };
       label.textContent = t("recorded", { time: formatTime(buffer.duration * 1000) });
       onRecorded(player);
     } catch (e) {
       label.textContent = t("tap-record");
-      setMessage(t("rec-failed"));
+      setMessage(`${t("rec-failed")} (${(e && e.name) || e})`);
     }
   };
 
@@ -263,9 +330,9 @@ $("rec-1").onclick = () => toggleRecording(1);
 $("rec-2").onclick = () => toggleRecording(2);
 
 $("play-1-rev").onclick = (e) => play(takes[1]?.reversed, e.currentTarget);
-$("play-2").onclick = (e) => play(takes[2]?.buffer, e.currentTarget);
+$("play-2").onclick = (e) => play(takes[2]?.forward, e.currentTarget);
 $("play-2-rev").onclick = (e) => play(takes[2]?.reversed, e.currentTarget);
-$("play-1").onclick = (e) => play(takes[1]?.buffer, e.currentTarget);
+$("play-1").onclick = (e) => play(takes[1]?.forward, e.currentTarget);
 
 $("to-step-2").onclick = () => { stopRecording(); goTo(2); };
 $("to-step-3").onclick = () => {
@@ -276,6 +343,8 @@ $("to-step-3").onclick = () => {
 
 $("new-round").onclick = () => {
   stopRecording();
+  releaseTake(takes[1]);
+  releaseTake(takes[2]);
   takes[1] = takes[2] = null;
   $("rec-1-label").textContent = t("tap-record");
   $("rec-2-label").textContent = t("tap-imitate");
